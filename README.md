@@ -1,5 +1,6 @@
 # Database Final Project - Backend API Server with mysql 
 ## Environment
+
 Ubuntu 22.04
 mysql  Ver 8.0.37-0ubuntu0.23.10.2 for Linux on aarch64 ((Ubuntu))
 
@@ -13,6 +14,6 @@ mysql  Ver 8.0.37-0ubuntu0.23.10.2 for Linux on aarch64 ((Ubuntu))
 4. Run app by  
     *  `python3 app.py`
     or
-    * `python3 app.py` then `flask run `
+    * `export FLASK_APP=app.py` then `flask run `
 
-The app will be run on http://127.0.0.1:5000 .
+The app will be run on http://127.0.0.1:5000 by default.
