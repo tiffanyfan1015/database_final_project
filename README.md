@@ -1,4 +1,4 @@
-# Backend API Server with mysql 
+# Database Final Project - Backend API Server with mysql 
 ## Environment
 Ubuntu 22.04
 mysql  Ver 8.0.37-0ubuntu0.23.10.2 for Linux on aarch64 ((Ubuntu))
