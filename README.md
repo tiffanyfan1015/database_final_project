@@ -24,7 +24,7 @@ The app will be run on http://127.0.0.1:5000 by default.
 * 記得定期更新到最新版
     * 更新到最新後開始新 branch
         * Step 1. 確認到 main branch 中 
-            * `git checkout master` 
+            * `git checkout main` 
             * `git pull`
         * Step 2. 開新的 branch 
             * `git branch feature/<newFeature>` 
