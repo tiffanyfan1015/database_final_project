@@ -1,6 +1,6 @@
 from flask import Flask
 from routers.login_router import login_bp
-from routers.game_filtering_router import game_filtering_bp
+# from routers.game_filtering_router import game_filtering_bp
 app = Flask(__name__)
 
 app.register_blueprint(login_bp)

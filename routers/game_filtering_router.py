@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from controllers.games_filtering_controller import get_filtered_games
+from controllers.game_filtering_controller import get_filtered_games
 
 game_filtering_bp = Blueprint('game_filtering', __name__, url_prefix='/games')
 

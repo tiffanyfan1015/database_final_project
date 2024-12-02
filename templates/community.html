@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ community['group_name'] }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <h1>Community: {{ community['group_name'] }}</h1>
+    
+    <div id="posts">
+        <h2>Posts</h2>
+        {% for post in posts %}
+            <div class="post">
+                <h3>{{ post['review_text_private'] }}</h3>
+                <p>{{ post['time_stamp'] }}</p>
+            </div>
+        {% endfor %}
+    </div>
+    
+    <div id="chat">
+        <h2>Chat Room</h2>
+        <form action="/community/{{ community['group_id'] }}/chat" method="POST">
+            <textarea name="message" placeholder="Enter your message"></textarea>
+            <button type="submit">Send Message</button>
+        </form>
+    </div>
+
+    <div id="recommend">
+        <h2>Recommended Games</h2>
+        <!-- Add logic to display recommended games -->
+    </div>
+</body>
+</html>

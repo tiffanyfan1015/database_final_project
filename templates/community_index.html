@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enter Group ID</title>
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"> -->
+</head>
+<body>
+    <h1>Enter Group ID</h1>
+    <form action="/community" method="POST">
+        <label for="group_id">Group ID:</label>
+        <input type="text" id="group_id" name="group_id" required>
+        <button type="submit">Go to Community</button>
+    </form>
+</body>
+</html>
