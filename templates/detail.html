@@ -34,6 +34,16 @@
         .game-description {
             flex: 1;
         }
+        .system-requirements {
+            margin-top: 20px;
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+        .system-requirements h3 {
+            margin-top: 0;
+        }
     </style>
 </head>
 <body>
@@ -45,6 +55,21 @@
                 <h2>Description</h2>
                 <p>{{ game[2] }}</p>
             </div>
+        </div>
+        <div class="system-requirements">
+            <h3>System Requirements</h3>
+            
+            <p><strong>PC:</strong></p>
+            <div>{{ game[3].get('minimum', 'N/A') | safe if game[3] else 'N/A' }}</div>
+            <div>{{ game[3].get('recommended', 'N/A') | safe if game[3] else 'N/A' }}</div>
+        
+            <p><strong>Mac:</strong></p>
+            <div>{{ game[4].get('minimum', 'N/A') | safe if game[4] else 'N/A' }}</div>
+            <div>{{ game[4].get('recommended', 'N/A') | safe if game[4] else 'N/A' }}</div>
+        
+            <p><strong>Linux:</strong></p>
+            <div>{{ game[5].get('minimum', 'N/A') | safe if game[5] else 'N/A' }}</div>
+            <div>{{ game[5].get('recommended', 'N/A') | safe if game[5] else 'N/A' }}</div>
         </div>
     </div>
 </body>
