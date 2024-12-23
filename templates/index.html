@@ -1,57 +1,55 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Menu</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            text-align: center;
-        }
-        h1 {
-            margin: 20px;
-        }
-        .game-grid {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-            padding: 20px;
-        }
-        .game {
-            background: #fff;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            width: 200px;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        .game img {
-            width: 100%;
-            height: auto;
-            border-bottom: 1px solid #ddd;
-        }
-        .game p {
-            margin: 10px 0;
-            font-weight: bold;
-        }
-    </style>
-</head>
-<body>
-    <h1>Game Menu</h1>
-    <div class="game-grid">
-        {% for game in games %}
-        <div class="game">
-            <a href="/game/{{ game[2] }}">
-                <img src="{{ game[1] }}" alt="Game Image">
-                <p>{{ game[0] }}</p> <!-- Display the game's name -->
-            </a>
-        </div>
-        {% endfor %}
+{% extends "base.html" %}
+<title>Game Menu</title>
+{% block title %}Game Menu{% endblock %}
+{% block head %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+        text-align: center;
+    }
+    h1 {
+        margin: 20px;
+    }
+    .game-grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+        padding: 20px;
+    }
+    .game {
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        width: 200px;
+        text-align: center;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .game img {
+        width: 100%;
+        height: auto;
+        border-bottom: 1px solid #ddd;
+    }
+    .game p {
+        margin: 10px 0;
+        font-weight: bold;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<h1>Game Menu</h1>
+<div class="game-grid">
+    {% for game in games %}
+    <div class="game">
+        <a href="/game/{{ game[2] }}">
+            <img src="{{ game[1] }}" alt="Game Image">
+            <p>{{ game[0] }}</p> <!-- Display the game's name -->
+        </a>
     </div>
-</body>
-</html>
+    {% endfor %}
+</div>
+{% endblock %}
