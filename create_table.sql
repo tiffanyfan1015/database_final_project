@@ -19,41 +19,40 @@ CREATE TABLE SteamReview (
     review_text TEXT
 );
 
-CREATE TABLE UserTable (
-    user_id INT PRIMARY KEY AUTO_INCREMENT,
-    username VARCHAR(255) NOT NULL,
+CREATE TABLE Users (
+    username VARCHAR(255) NOT NULL PRIMARY KEY,
     password VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE GroupTable (
-    group_id INT PRIMARY KEY AUTO_INCREMENT,
-    group_name VARCHAR(255) NOT NULL
+CREATE TABLE `Groups` (
+    group_name VARCHAR(255) NOT NULL PRIMARY KEY,
+    group_info VARCHAR(255)
 );
 
 CREATE TABLE GroupWithUser (
-    group_id INT,
-    user_id INT,
-    PRIMARY KEY (group_id, user_id),
-    FOREIGN KEY (group_id) REFERENCES GroupTable(group_id) ON DELETE CASCADE,
-    FOREIGN KEY (user_id) REFERENCES UserTable(user_id) ON DELETE CASCADE
+    group_name VARCHAR(255),
+    username VARCHAR(255),
+    PRIMARY KEY (group_name, username),
+    FOREIGN KEY (group_name) REFERENCES `Groups`(group_name) ON DELETE CASCADE,
+    FOREIGN KEY (username) REFERENCES Users(username) ON DELETE CASCADE
 );
 
 CREATE TABLE PostTable (
     post_id INT PRIMARY KEY AUTO_INCREMENT,
-    group_id INT,
+    group_name VARCHAR(255),
     appid INT,
     review_text_private TEXT,
     timestamp DATETIME,
-    FOREIGN KEY (group_id) REFERENCES GroupTable(group_id) ON DELETE CASCADE,
+    FOREIGN KEY (group_name) REFERENCES GroupTable(group_name) ON DELETE CASCADE,
     FOREIGN KEY (appid) REFERENCES Game(appid) ON DELETE CASCADE
 );
 
 CREATE TABLE GroupChatTable (
     chat_id INT PRIMARY KEY AUTO_INCREMENT,
-    group_id INT,
+    group_name VARCHAR(255),
     post_id INT,
     message TEXT,
     timestamp DATETIME,
-    FOREIGN KEY (group_id) REFERENCES GroupTable(group_id) ON DELETE CASCADE,
+    FOREIGN KEY (group_name) REFERENCES GroupTable(group_name) ON DELETE CASCADE,
     FOREIGN KEY (post_id) REFERENCES PostTable(post_id) ON DELETE CASCADE
 );

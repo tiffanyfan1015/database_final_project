@@ -1,7 +1,8 @@
-from flask import Blueprint, request, jsonify
-from controllers.login_controller import get_users, get_user_by_id, add_user, update_user, delete_user, login
+from flask import Blueprint, redirect, render_template, request, jsonify
+from controllers.login_controller import *
 
-login_bp = Blueprint('login_bp', __name__)
+login_bp = Blueprint('login_bp', __name__, template_folder='templates')
+
 
 @login_bp.get('/users')
 def get_users_route():
@@ -13,11 +14,19 @@ def get_user_route(user_id):
     response = get_user_by_id(user_id)
     return jsonify(response['data']), response['status_code']
 
-@login_bp.post('/users')
+@login_bp.route('/signup', methods=['GET', 'POST'])
 def add_user_route():
-    data = request.get_json()
-    response = add_user(data)
-    return jsonify(response['message']), response['status_code']
+    if request.method == 'POST':
+        data = request.form.to_dict()
+        response = add_user(data)
+        if response['status_code'] == 201:
+            status = "success-message"
+            return redirect("/login")
+        else: 
+            status = "error-message"
+            return render_template('signup.html', message=response['message'], status=status)
+    else:
+        return render_template('signup.html')
 
 @login_bp.put('/users/<user_id>')
 def update_user_route(user_id):
@@ -30,8 +39,19 @@ def delete_user_route(user_id):
     response = delete_user(user_id)
     return jsonify(response['message']), response['status_code']
 
-@login_bp.post('/login')
+@login_bp.route('/login', methods=['GET', 'POST'])
 def login_route():
-    data = request.get_json()
-    response = login(data)
-    return jsonify(response['message']), response['status_code']
+    if request.method == 'POST':
+        data = request.form.to_dict()
+        response = login(data)
+        if response['status_code'] == 200:  
+            status = "success-message"
+        else:
+            status = "error-message"
+        return render_template('login.html', message=response['message'], status=status)
+    
+    return render_template('login.html')
+
+@login_bp.route('/logout', methods=['GET'])
+def logout_route():
+    return logout()
