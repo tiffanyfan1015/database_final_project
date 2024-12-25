@@ -5,7 +5,7 @@ def get_users():
     try:
         conn = get_db_connection()
         cursor = conn.cursor(dictionary=True)
-        cursor.execute("SELECT * FROM users")
+        cursor.execute("SELECT * FROM Users")
         users = cursor.fetchall()
         return {"data": users, "status_code": 200}
     except Exception as e:
@@ -16,11 +16,12 @@ def get_users():
         if 'conn' in locals():
             conn.close()
 
-def get_user_by_id(user_id):
+
+def get_user_by_name(user_name):
     try:
         conn = get_db_connection()
         cursor = conn.cursor(dictionary=True)
-        cursor.execute("SELECT * FROM users WHERE username = %s", (user_id,))
+        cursor.execute("SELECT * FROM Users WHERE username = %s", (user_name,))
         user = cursor.fetchone()
         if user:
             return {"data": user, "status_code": 200}
@@ -34,17 +35,20 @@ def get_user_by_id(user_id):
         if 'conn' in locals():
             conn.close()
 
+
 def add_user(data):
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
         query = """
-            INSERT INTO users (username, password)
+            INSERT INTO Users (username, password)
             VALUES (%s, %s)
         """
-        cursor.execute(query,(data["username"], data["password"]))
+        password = data["password"]
+        password = hashlib.sha256(password.encode()).hexdigest()
+        cursor.execute(query,(data["username"], password))
         conn.commit()
-        return {"message": "User added successfully", "status_code": 201}
+        return {"message": "Signup successful. Please Login.", "status_code": 201}
     except Exception as e:
         return {"message": str(e), "status_code": 500}
     finally:
@@ -53,12 +57,17 @@ def add_user(data):
         if 'conn' in locals():
             conn.close()
 
-def update_user(user_id, data):
+
+def update_user(data):
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
-        query = "UPDATE users SET password = %s WHERE username = %s"
-        cursor.execute(query, (data.get("password"),user_id))
+        query = "UPDATE Users SET password = %s WHERE username = %s"
+        username = data['username']
+        password = data['new_password']
+        password = hashlib.sha256(password.encode()).hexdigest()
+
+        cursor.execute(query, (password, username))
         conn.commit()
         return {"message": "User updated successfully", "status_code": 200}
     except Exception as e:
@@ -69,12 +78,13 @@ def update_user(user_id, data):
         if 'conn' in locals():
             conn.close()
 
-def delete_user(user_id):
+
+def delete_user(user_name):
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
-        query = "DELETE FROM users WHERE username = %s"
-        cursor.execute(query, (user_id,))
+        query = "DELETE FROM Users WHERE username = %s"
+        cursor.execute(query, (user_name,))
         conn.commit()
         return {"message": "User deleted successfully", "status_code": 200}
     except Exception as e:
@@ -90,11 +100,14 @@ def login(data):
     try:
         conn = get_db_connection()
         cursor = conn.cursor(dictionary=True)
-        query = "SELECT * FROM users WHERE username = %s AND password = %s"
-        cursor.execute(query, (data["username"], data["password"]))
+        query = "SELECT * FROM Users WHERE username = %s AND password = %s"
+        password = data["password"]
+        password = hashlib.sha256(password.encode()).hexdigest()
+
+        cursor.execute(query, (data["username"], password))
         user = cursor.fetchone()
         if user:
-            return {"message": "Login successful", "user": user, "status_code": 200}
+            return {"message": "Login successful", "status_code": 200}
         else:
             return {"message": "Invalid username or password", "status_code": 401}
     except Exception as e:
