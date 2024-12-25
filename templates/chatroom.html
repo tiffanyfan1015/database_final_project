@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Room</title>
+    <style>
+        .chat-container {
+            max-height: 400px;
+            overflow-y: scroll;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+        .chat-message {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        .timestamp {
+            font-size: 0.8em;
+            color: gray;
+        }
+        .message {
+            font-size: 1em;
+        }
+        .no-messages {
+            font-style: italic;
+            color: gray;
+        }
+    </style>
+</head>
+<body>
+    <h1>Chat Room</h1>
+
+    <div class="chat-container">
+        {% for chat in chats %}
+            <div class="chat-message">
+                <span class="timestamp">{{ chat['time_stamp'] }}</span>
+                <span class="message">{{ chat['message_'] }}</span>
+            </div>
+        {% else %}
+            <div class="no-messages">No messages yet. Be the first to chat!</div>
+        {% endfor %}
+    </div>
+
+    <form action="{{ url_for('community_bp.send_message', group_id=group_id) }}" method="POST">
+        <textarea name="message" required></textarea><br>
+        <button type="submit">Send</button>
+    </form>
+
+    <a href="{{ url_for('community_bp.view_community', group_id=group_id) }}">Back to Community</a>
+</body>
+</html>
