@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Default Title{% endblock %}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #0078D7;
+            color: white;
+            padding: 10px 20px;
+        }
+
+        .header-left img {
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .user-dropdown {
+            cursor: pointer;
+            position: relative;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: white;
+            color: black;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 150px;
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 10px;
+            text-decoration: none;
+            color: #007BFF;
+        }
+
+        .dropdown-menu a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdown-menu.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-left">
+            <img src="https://via.placeholder.com/40" alt="Logo">
+            <span>Welcome to My Website</span>
+        </div>
+        <div class="header-right">
+            <div class="user-dropdown" onclick="toggleDropdown()">
+                <span>{{ username if username else "Guest" }}</span>
+                <div class="dropdown-menu" id="dropdown-menu">
+                    {% if username %}
+                        <a href="/users/password">Modify Password</a>
+                        <a href="/logout">Log Out</a>
+                    {% else %}
+                        <a href="/login">Log In</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </header>
+    <main>
+        {% block content %}
+        <!-- Child page content will be inserted here -->
+        {% endblock %}
+    </main>
+
+    <script>
+        function toggleDropdown() {
+            document.getElementById('dropdown-menu').classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
