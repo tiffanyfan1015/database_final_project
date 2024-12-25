@@ -34,7 +34,6 @@ def update_user_route():
     if request.method == 'POST':
         data = request.form.to_dict()
         data['username'] = session['username']
-        print(data)
         response = update_user(data)
         if response['status_code'] == 200:
             redirect('/')
