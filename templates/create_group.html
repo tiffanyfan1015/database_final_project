@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Group Form</title>
+    <style>
+        .error-message {
+            color: red;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+        .success-message {
+            color: green;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Create a Group</h1>
+    <form action="/group" method="POST">
+        <div id="{{ status }}" class="{{ status }}">{{ message }}</div>
+        <label for="group_name">Group Name:</label>
+        <input type="text" id="group_name" name="group_name" required>
+        <br><br>
+
+        <label for="group_info">Group Info:</label>
+        <textarea id="group_info" name="group_info" rows="4" cols="50" required></textarea>
+        <br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

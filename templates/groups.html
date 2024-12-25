@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Group List</title>
+    <script>
+        function showUpdateForm(groupName) {
+            const formId = `update-form-${groupName}`;
+            document.getElementById(formId).style.display = 'block';
+        }
+        function showNotice() {
+            const params = new URLSearchParams(window.location.search);
+            const message = params.get('message');
+            const status = params.get('status');
+            if (message) {
+                const notice = document.getElementById('notice');
+                notice.textContent = message;
+                notice.style.color = status === 'success-message' ? 'green' : 'red';
+                notice.style.display = 'block';
+                setTimeout(() => {
+                    notice.style.display = 'none';
+                }, 5000); // Hide after 5 seconds
+            }
+        }
+        window.onload = showNotice;
+    </script>
+</head>
+<body>
+    <h1>Groups</h1>
+    <div id="notice" style="display: none;"></div>
+    <ul>
+        {% for group in data %}
+        <li>
+            <strong>{{ group.group_name }}</strong>: {{ group.group_info }}
+            <button onclick="showUpdateForm('{{ group.group_name }}')">Update Info</button>
+            <form id="update-form-{{ group.group_name }}" action="/group/update/{{ group.group_name }}" method="POST" style="display: none;">
+                <textarea name="group_info" rows="2" cols="50" required></textarea>
+                <br>
+                <button type="submit">Submit</button>
+            </form>
+            <form action="/group/delete/{{ group.group_name }}" method="POST" style="display: inline;">
+                <button type="submit">Delete</button>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
