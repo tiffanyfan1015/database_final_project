@@ -11,6 +11,70 @@ CREATE TABLE Game (
     `2d_or_3d` VARCHAR(50)
 );
 
+CREATE TABLE Comments (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    appid INT,
+    username VARCHAR(255),
+    comment TEXT,
+    created_at TIMESTAMP
+);
+
+CREATE TABLE Description (
+    appid INT PRIMARY KEY,
+    detailed_description TEXT,
+    about_the_game TEXT,
+    short_description TEXT
+);
+
+LOAD DATA LOCAL INFILE '/path/to/your/description.csv'
+INTO TABLE Description
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'            
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS;
+
+CREATE TABLE Media (
+    appid INT PRIMARY KEY,
+    header_image TEXT
+);
+
+LOAD DATA LOCAL INFILE '/path/to/your/media.csv'
+INTO TABLE Media
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'            
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS;
+
+CREATE TABLE Requirements (
+    appid INT PRIMARY KEY,
+    pc_requirements TEXT,
+    mac_requirements TEXT,
+    linux_requirements TEXT,
+    minimum TEXT,
+    recommended TEXT
+);
+
+LOAD DATA LOCAL INFILE '/path/to/your/Requirements.csv'
+INTO TABLE Requirements
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'            
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS;
+
+CREATE TABLE Support (
+    appid INT PRIMARY KEY,
+    website TEXT,
+    support_url TEXT,
+    support_email TEXT
+)
+
+LOAD DATA LOCAL INFILE '/path/to/your/Support.csv'
+INTO TABLE Support
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'            
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS;
+
 CREATE TABLE SteamReview (
     app_id INT PRIMARY KEY,
     app_name VARCHAR(255),
