@@ -38,7 +38,6 @@ def game_details(appid):
     conn = get_db_connection()
     cursor = conn.cursor()
 
-    # Fetch game details
     cursor.execute("""
         SELECT Steam.name, Media.header_image, Description.detailed_description
         FROM Steam
@@ -49,7 +48,6 @@ def game_details(appid):
 
     game = cursor.fetchone()
 
-    # Fetch system requirements
     cursor.execute("""
         SELECT pc_requirements, mac_requirements, linux_requirements
         FROM Requirements
@@ -87,6 +85,5 @@ def game_details(appid):
         game=game,
         requirements=parsed_requirements
     )
-
 if __name__ == '__main__':
     app.run(debug=True)

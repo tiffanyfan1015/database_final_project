@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enter Group ID</title>
+</head>
+<body>
+    <h1>Enter Group Name</h1>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul>
+                {% for category, message in messages %}
+                    <li style="color: red;">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    <form action="/community" method="POST">
+        <label for="group_id">Group Name:</label>
+        <input type="text" id="group_id" name="group_id" required>
+        <button type="submit">Go to Community</button>
+    </form>
+</body>
+</html>
