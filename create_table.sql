@@ -43,16 +43,18 @@ CREATE TABLE PostTable (
     appid INT,
     review_text_private TEXT,
     timestamp DATETIME,
-    FOREIGN KEY (group_name) REFERENCES GroupTable(group_name) ON DELETE CASCADE,
+    FOREIGN KEY (group_name) REFERENCES `Groups`(group_name) ON DELETE CASCADE,
     FOREIGN KEY (appid) REFERENCES Game(appid) ON DELETE CASCADE
 );
 
 CREATE TABLE GroupChatTable (
     chat_id INT PRIMARY KEY AUTO_INCREMENT,
     group_name VARCHAR(255),
+    user_name VARCHAR(255),
     post_id INT,
     message TEXT,
     timestamp DATETIME,
-    FOREIGN KEY (group_name) REFERENCES GroupTable(group_name) ON DELETE CASCADE,
+    FOREIGN KEY (group_name) REFERENCES `Groups`(group_name) ON DELETE CASCADE,
+    -- FOREIGN KEY (user_name) REFERENCES Users (username) ON DELETE CASCADE,
     FOREIGN KEY (post_id) REFERENCES PostTable(post_id) ON DELETE CASCADE
 );
