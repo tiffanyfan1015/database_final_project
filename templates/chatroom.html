@@ -3,52 +3,128 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat Room</title>
+    <title>Group {{ group_name }} Chat Room</title>
     <style>
-        .chat-container {
-            max-height: 400px;
-            overflow-y: scroll;
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+
+        h1 {
+            text-align: center;
+            color: #444;
+            margin: 20px 0;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007bff;
+            margin: 10px 0;
+            display: block;
+            text-align: center;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        #chat-container {
+            width: 80%;
+            max-width: 600px;
+            margin: 20px auto;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            overflow-y: auto;
+            height: 400px;
+        }
+
+        #chat-container div {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            background: #e9f5ff;
+        }
+
+        #chat-container div strong {
+            color: #333;
+            font-weight: bold;
+        }
+
+        #chat-container div p {
+            margin: 5px 0 0 0;
+            color: #555;
+        }
+
+        #chat-container div time {
+            font-size: 0.85em;
+            color: #888;
+        }
+
+        form {
+            width: 80%;
+            max-width: 600px;
+            margin: 20px auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        form input, form textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
             border: 1px solid #ccc;
-            padding: 10px;
-            margin-bottom: 20px;
-        }
-        .chat-message {
-            padding: 10px;
-            margin-bottom: 10px;
-            border-bottom: 1px solid #ddd;
-        }
-        .timestamp {
-            font-size: 0.8em;
-            color: gray;
-        }
-        .message {
+            border-radius: 5px;
             font-size: 1em;
         }
-        .no-messages {
-            font-style: italic;
-            color: gray;
+
+        form button {
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        form button:hover {
+            background: #0056b3;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.85em;
+            color: #aaa;
         }
     </style>
 </head>
 <body>
-    <h1>Chat Room</h1>
+    <h1>Group {{ group_name }} 的 Chat Room</h1>
+    <a href="{{ url_for('community_bp.view_community', group_name=group_name) }}">返回</a>
 
-    <div class="chat-container">
+    <!-- chat record -->
+    <div id="chat-container">
         {% for chat in chats %}
-            <div class="chat-message">
-                <span class="timestamp">{{ chat['time_stamp'] }}</span>
-                <span class="message">{{ chat['message_'] }}</span>
+            <div>
+                <strong>{{ chat.user_name }}</strong>
+                <time>({{ chat.timestamp }})</time>
+                <p>{{ chat.message }}</p>
             </div>
-        {% else %}
-            <div class="no-messages">No messages yet. Be the first to chat!</div>
         {% endfor %}
     </div>
 
-    <form action="{{ url_for('community_bp.send_message', group_id=group_id) }}" method="POST">
-        <textarea name="message" required></textarea><br>
-        <button type="submit">Send</button>
+    <!-- send message (之後會把user_name改成從user抓) -->
+    <form action="{{ url_for('community_bp.send_message', group_name=group_name) }}" method="POST">
+        <input type="text" name="user_name" placeholder="your name " required>
+        <textarea name="message" placeholder="Enter message" required></textarea>
+        <button type="submit">Submit</button>
     </form>
-
-    <a href="{{ url_for('community_bp.view_community', group_id=group_id) }}">Back to Community</a>
 </body>
 </html>

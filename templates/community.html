@@ -3,19 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ community['group_name'] }}</title>
+    <title>Community of {{ community['group_name'] }}</title>
 </head>
 <body>
-    <h1>{{ community['group_name'] }}</h1>
+    <h1>Community of {{ community['group_name'] }}</h1>
 
     <!-- Chat Room and Recommend Buttons -->
-    <form action="{{ url_for('community_bp.view_chat_room', group_id=community['group_id']) }}" method="get">
-        <button type="submit">Chat Room</button>
-    </form>
+    <a href="{{ url_for('community_bp.view_chat_room', group_name=community['group_name']) }}">
+        <button type="button">Chat Room</button>
+    </a>
 
-    <form action="{{ url_for('community_bp.view_recommend', group_id=community['group_id']) }}" method="get">
-        <button type="submit">Recommend</button>
-    </form>
+    <a href="{{ url_for('community_bp.view_recommend', group_name=community['group_name']) }}">
+        <button type="button">Recommend</button>
+    </a>
 
     <!-- Post Section -->
     <h2>Posts</h2>
