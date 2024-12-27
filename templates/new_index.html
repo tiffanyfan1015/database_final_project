@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DBMS Website</title>
+    <style>
+    /* General Reset */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #FFF4EA;
+            color: #7EACB5;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+    /* Header */
+        .header {
+            background-color: #C96868;
+            color: #FFF4EA;
+            padding: 20px;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center; /* Ensures vertical alignment */
+            justify-content: space-between;
+        }
+
+        .header-left {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header-title {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .search-wrapper {
+            display: flex;
+            align-items: center; /* Vertically aligns items */
+            gap: 10px;
+            margin-top: 0; /* Remove extra margin */
+        }
+
+        .search-input {
+            padding: 10px;
+            border: 1px solid #FFF4EA;
+            border-radius: 5px;
+            width: 300px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center; /* Ensures the Group ID aligns vertically with the search bar */
+            gap: 20px;
+            margin-top: relative; /* Adjust to match the search wrapper */
+        }
+
+        .group-input {
+            padding: 10px;
+            border: 1px solid #FFF4EA;
+            border-radius: 5px;
+            width: 200px;
+            margin-top: 45px;
+        }
+
+        .user-dropdown {
+            cursor: pointer;
+            position: relative;
+            color: #FFF4EA;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: white;
+            color: black;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 150px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 10px;
+            text-decoration: none;
+            color: #C96868;
+        }
+
+        .dropdown-menu a:hover {
+            background-color: #f1f1f1;
+        }
+        .dropdown-menu.active {
+            display: block;
+        }
+        .login-button {
+            background-color: #7EACB5;
+            color: #FFF4EA;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            margin-top: 45px;
+            cursor: pointer;
+        }
+
+        .login-button:hover {
+            background-color: #FADFA1;
+            color: #C96868;
+        }
+
+        /* Filter Container */
+        .filter-container {
+            position: absolute;
+            top: 130px;
+            left: calc(50% - 600px);
+            background-color: #FFF4EA;
+            border: 2px solid #C96868;
+            padding: 10px; /* Reduced padding */
+            z-index: 10;
+            width: 100%;
+            max-width: 1200px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.1px; /* Reduced gap between sections */
+        }
+
+        .filter-container.hidden {
+            display: none;
+        }
+
+        .filter-section {
+            flex: 1;
+            min-width: 120px; /* Decreased width for compact layout */
+            margin-bottom: 15px; /* Adjusted bottom margin for spacing */
+        }
+
+        .filter-section h3 {
+            color: #C96868;
+            margin-bottom: 2px; /* Smaller margin below heading */
+            font-size: 1rem; /* Reduced font size */
+        }
+
+        .filter-section label {
+            color: #7EACB5;
+            font-size: 0.9rem; /* Reduced text size */
+        }
+
+        /* Main Content */
+        .content {
+            padding: 20px;
+            flex: 1;
+        }
+
+        .content h2 {
+            text-align: center;
+            color: #C96868;
+        }
+
+        .card-container {
+            display: flex;
+            justify-content: space-between; /* Ensures alignment with the header */
+            flex-wrap: wrap;
+            max-width: 1200px; /* Matches the header width */
+            margin: 0 auto; /* Center aligns the container */
+        }
+
+        .card-container a {
+            text-decoration: none; /* Remove underline for links */
+            color: inherit; /* Keep text color consistent */
+        }
+
+        .card {
+            background-color: #FFF4EA;
+            border: 1px solid #FADFA1;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            text-align: center;
+            width: 18%; /* Reduced card width */
+            margin: 20px 2.1%; /* Increased margin for spacing */
+            margin-bottom: 30px;
+            transition: transform 0.2s, box-shadow 0.2s; /* Smooth transition for hover effects */
+        }
+
+        .card:hover {
+            transform: scale(1.05); /* Slight zoom effect on hover */
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+        }
+
+        .card img {
+            width: 100%;
+            border-radius: 5px;
+        }
+
+        .card-title {
+            color: #C96868;
+            margin-top: 10px;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #7EACB5;
+            color: #FFF4EA;
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-container">
+        <div class="header-left">
+            <h1 class="header-title">DBMS Group 15 Final Project</h1>
+            <div class="search-wrapper">
+            <input type="text" id="searchFilterInput" placeholder="Search or Filter..." class="search-input">
+            </div>
+        </div>
+
+        <div class="header-right">
+            <!-- Enter Group ID -->
+            <form class="group-form" action="/community" method="POST">
+                <input type="text" id="group_name" name="group_name" placeholder="Enter Group Name..." class="group-input" required>
+                <button type="submit" class="go-button">Go to Community</button>
+            </form>
+            <!-- User Dropdown -->
+            <div class="user-dropdown" onclick="toggleDropdown()">
+            <span>{{ username if username else "Guest" }}</span>
+            <div class="dropdown-menu" id="dropdown-menu">
+                {% if username %}
+                <a href="/users/password">Modify Password</a>
+                <a href="/logout">Log Out</a>
+                {% else %}
+                <a href="/login">Log In</a>
+                {% endif %}
+            </div>
+            </div>
+        </div>
+        </div>
+    </header>
+
+    <main class="content">
+        <h2>Recommended Games</h2>
+        <div class="card-container">
+        <a href="game-details-counter-strike.html" class="card">
+            <img src="../images/counter-strike.jpg" alt="Counter Strike">
+            <h3 class="card-title">Counter Strike</h3>
+            <p>Body text for Counter Strike.</p>
+        </a>
+        <a href="game-details-team-fortress.html" class="card">
+            <img src="../images/team-fortress.jpg" alt="Team Fortress">
+            <h3 class="card-title">Team Fortress</h3>
+            <p>Body text for Team Fortress.</p>
+        </a>
+        <a href="game-details-day-of-defeat.html" class="card">
+            <img src="../images/day-of-defeat.jpg" alt="Day of Defeat">
+            <h3 class="card-title">Day of Defeat</h3>
+            <p>Body text for Day of Defeat.</p>
+        </a>
+        <a href="game-details-counter-strike.html" class="card">
+            <img src="../images/counter-strike.jpg" alt="Counter Strike">
+            <h3 class="card-title">Counter Strike</h3>
+            <p>Body text for Counter Strike.</p>
+        </a>
+        <a href="game-details-counter-strike.html" class="card">
+            <img src="../images/counter-strike.jpg" alt="Counter Strike">
+            <h3 class="card-title">Counter Strike</h3>
+            <p>Body text for Counter Strike.</p>
+        </a>
+        <a href="game-details-team-fortress.html" class="card">
+            <img src="../images/team-fortress.jpg" alt="Team Fortress">
+            <h3 class="card-title">Team Fortress</h3>
+            <p>Body text for Team Fortress.</p>
+        </a>
+        <a href="game-details-day-of-defeat.html" class="card">
+            <img src="../images/day-of-defeat.jpg" alt="Day of Defeat">
+            <h3 class="card-title">Day of Defeat</h3>
+            <p>Body text for Day of Defeat.</p>
+        </a>
+        <a href="game-details-counter-strike.html" class="card">
+            <img src="../images/counter-strike.jpg" alt="Counter Strike">
+            <h3 class="card-title">Counter Strike</h3>
+            <p>Body text for Counter Strike.</p>
+        </a>
+        <a href="game-details-counter-strike.html" class="card">
+            <img src="../images/counter-strike.jpg" alt="Counter Strike">
+            <h3 class="card-title">Counter Strike</h3>
+            <p>Body text for Counter Strike.</p>
+        </a>
+        <a href="game-details-team-fortress.html" class="card">
+            <img src="../images/team-fortress.jpg" alt="Team Fortress">
+            <h3 class="card-title">Team Fortress</h3>
+            <p>Body text for Team Fortress.</p>
+        </a>
+        <a href="game-details-day-of-defeat.html" class="card">
+            <img src="../images/day-of-defeat.jpg" alt="Day of Defeat">
+            <h3 class="card-title">Day of Defeat</h3>
+            <p>Body text for Day of Defeat.</p>
+        </a>
+        <a href="game-details-counter-strike.html" class="card">
+            <img src="../images/counter-strike.jpg" alt="Counter Strike">
+            <h3 class="card-title">Counter Strike</h3>
+            <p>Body text for Counter Strike.</p>
+        </a>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2024 DBMS Group 15. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+        const searchFilterInput = document.getElementById("searchFilterInput");
+        const filterContainer = document.getElementById("filterContainer");
+
+        searchFilterInput.addEventListener("click", () => {
+            filterContainer.classList.toggle("hidden");
+        });
+        });
+        function toggleDropdown() {
+        document.getElementById('dropdown-menu').classList.toggle('active');
+        }
+    </script>
+</body>
+</html>

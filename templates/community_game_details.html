@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ game.game_name }}</title>
+    <script>
+        function togglePopup() {
+            document.querySelector('.popup').classList.toggle('active');
+        }
+
+        function setTag(tag) {
+            document.getElementById('tag').value = tag;
+        }
+    </script>
+</head>
+<body>
+    <h1>{{ game.game_name }}</h1>
+    <p>{{ game.description }}</p>
+    <button onclick="togglePopup()">✈️ Post</button>
+
+    <div class="popup" style="display:none;">
+        <h2>Create a Post</h2>
+        <form action="{{ url_for('community_bp.create_post_route', group_name=group_name, appid=game.appid) }}" method="POST">
+            <input type="hidden" name="tag" id="tag" value="0">
+            <button type="button" onclick="setTag(0)">ASK</button>
+            <button type="button" onclick="setTag(1)">Recommend</button>
+            <textarea name="review_text_private" placeholder="Write your thoughts"></textarea>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+</html>
