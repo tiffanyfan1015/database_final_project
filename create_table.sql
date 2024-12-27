@@ -1,5 +1,5 @@
 LOAD DATA LOCAL INFILE '/path/to/your/steam.csv'
-INTO TABLE Description
+INTO TABLE Game
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'            
 LINES TERMINATED BY '\n'
