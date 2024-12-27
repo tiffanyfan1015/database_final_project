@@ -1,3 +1,9 @@
+LOAD DATA LOCAL INFILE '/path/to/your/steam.csv'
+INTO TABLE Description
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'            
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS;
 
 CREATE TABLE Game (
     appid INT PRIMARY KEY,
