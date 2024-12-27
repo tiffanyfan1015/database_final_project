@@ -122,7 +122,7 @@
 
     <!-- send message (之後會把user_name改成從user抓) -->
     <form action="{{ url_for('community_bp.send_message', group_name=group_name) }}" method="POST">
-        <input type="text" name="user_name" placeholder="your name " required>
+        <!-- <input type="text" name="user_name" placeholder="your name " required> -->
         <textarea name="message" placeholder="Enter message" required></textarea>
         <button type="submit">Submit</button>
     </form>
