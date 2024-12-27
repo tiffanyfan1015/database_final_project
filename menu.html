@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DBMS Website</title>
+  <style>
+    /* General Reset */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-color: #FFF4EA;
+      color: #7EACB5;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* Header */
+    .header {
+      background-color: #C96868;
+      color: #FFF4EA;
+      padding: 20px;
+    }
+
+    .header-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center; /* Ensures vertical alignment */
+  justify-content: space-between;
+}
+
+    .header-left {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .header-title {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+
+    .search-wrapper {
+      display: flex;
+      align-items: center; /* Vertically aligns items */
+      gap: 10px;
+      margin-top: 0; /* Remove extra margin */
+    }
+
+    .search-input {
+      padding: 10px;
+      border: 1px solid #FFF4EA;
+      border-radius: 5px;
+      width: 300px;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center; /* Ensures the Group ID aligns vertically with the search bar */
+      gap: 10px;
+      margin-top: 5px; /* Adjust to match the search wrapper */
+    }
+
+    .group-input {
+      padding: 10px;
+      border: 1px solid #FFF4EA;
+      border-radius: 5px;
+      width: 200px;
+      margin-top: 45px;
+      
+    }
+
+    .login-button {
+      background-color: #7EACB5;
+      color: #FFF4EA;
+      border: none;
+      border-radius: 5px;
+      padding: 10px 20px;
+      margin-top: 45px;
+      cursor: pointer;
+    }
+
+    .login-button:hover {
+      background-color: #FADFA1;
+      color: #C96868;
+    }
+
+    /* Filter Container */
+    .filter-container {
+      position: absolute;
+      top: 130px;
+      left: calc(50% - 600px);
+      background-color: #FFF4EA;
+      border: 2px solid #C96868;
+      padding: 10px; /* Reduced padding */
+      z-index: 10;
+      width: 100%;
+      max-width: 1200px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.1px; /* Reduced gap between sections */
+    }
+
+    .filter-container.hidden {
+      display: none;
+    }
+
+    .filter-section {
+    flex: 1;
+    min-width: 120px; /* Decreased width for compact layout */
+    margin-bottom: 15px; /* Adjusted bottom margin for spacing */
+  }
+
+    .filter-section h3 {
+      color: #C96868;
+      margin-bottom: 2px; /* Smaller margin below heading */
+      font-size: 1rem; /* Reduced font size */
+    }
+
+    .filter-section label {
+      color: #7EACB5;
+      font-size: 0.9rem; /* Reduced text size */
+    }
+
+    /* Main Content */
+    .content {
+      padding: 20px;
+      flex: 1;
+    }
+
+    .content h2 {
+      text-align: center;
+      color: #C96868;
+    }
+
+    .card-container {
+        display: flex;
+        justify-content: space-between; /* Ensures alignment with the header */
+        flex-wrap: wrap;
+        max-width: 1200px; /* Matches the header width */
+        margin: 0 auto; /* Center aligns the container */
+    }
+
+    .card {
+        background-color: #FFF4EA;
+        border: 1px solid #FADFA1;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 15px;
+        text-align: center;
+        width: 18%; /* Reduced card width */
+        margin: 20px 2.1%; /* Increased margin for spacing */
+        margin-bottom: 30px;
+    }
+
+    .card img {
+        width: 100%;
+        border-radius: 5px;
+    }
+
+    .card-title {
+        color: #C96868;
+        margin-top: 10px;
+    }
+    /* Footer */
+    .footer {
+      background-color: #7EACB5;
+      color: #FFF4EA;
+      text-align: center;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-container">
+      <!-- Left Section: DBMS and Search -->
+      <div class="header-left">
+        <h1 class="header-title">DBMS Group 15 Final Project</h1>
+        <div class="search-wrapper">
+          <input type="text" id="searchFilterInput" placeholder="Search or Filter..." class="search-input">
+        </div>
+      </div>
+
+      <!-- Right Section: Group ID and Login -->
+      <div class="header-right">
+        <input type="text" placeholder="Enter Group ID..." class="group-input">
+        <button class="login-button">Sign in / Login</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Filter System -->
+  <div class="filter-container hidden" id="filterContainer">
+    <div class="filter-section">
+      <h3>Language</h3>
+      <label><input type="checkbox"> Chinese</label><br>
+      <label><input type="checkbox"> English</label><br>
+      <label><input type="checkbox"> Spanish</label><br>
+      <label><input type="checkbox"> Italian</label><br>
+      <label><input type="checkbox"> German</label>
+    </div>
+    <div class="filter-section">
+      <h3>Platform</h3>
+      <label><input type="checkbox"> Windows</label><br>
+      <label><input type="checkbox"> MacOS</label><br>
+      <label><input type="checkbox"> Linux</label>
+    </div>
+    <div class="filter-section">
+      <h3>Required Age</h3>
+      <label><input type="checkbox"> 12++</label><br>
+      <label><input type="checkbox"> 16+</label><br>
+      <label><input type="checkbox"> 18+</label>
+    </div>
+    <div class="filter-section">
+      <h3>Genres</h3>
+      <label><input type="checkbox"> Action</label><br>
+      <label><input type="checkbox"> Casual</label><br>
+      <label><input type="checkbox"> Indie</label><br>
+      <label><input type="checkbox"> Adventure</label><br>
+      <label><input type="checkbox"> Strategy</label>
+    </div>
+    <div class="filter-section">
+      <h3>Categories</h3>
+      <label><input type="checkbox"> Single-player</label><br>
+      <label><input type="checkbox"> Multi-player</label><br>
+      <label><input type="checkbox"> Online Co-op</label><br>
+      <label><input type="checkbox"> Local Co-op</label><br>
+      <label><input type="checkbox"> Steam Achievements</label>
+    </div>
+  </div>
+
+  <main class="content">
+    <h2>Recommended Games</h2>
+    <div class="card-container">
+      <div class="card">
+        <img src="../images/counter-strike.jpg" alt="Counter Strike">
+        <h3 class="card-title">Game Title</h3>
+        <p>Body text for whatever you'd like to add more to the subheading.</p>
+      </div>
+      <div class="card">
+        <img src="../images/team-fortress.jpg" alt="Team Fortress">
+        <h3 class="card-title">Game Title</h3>
+        <p>Body text for whatever you'd like to expand on the main point.</p>
+      </div>
+      <div class="card">
+        <img src="../images/day-of-defeat.jpg" alt="Day of Defeat">
+        <h3 class="card-title">Game Title</h3>
+        <p>Body text for whatever you'd like to share more.</p>
+      </div>
+      <div class="card">
+        <img src="../images/counter-strike.jpg" alt="Counter Strike">
+        <h3 class="card-title">Game Title</h3>
+        <p>Body text for whatever you'd like to add more to the subheading.</p>
+      </div>
+      <div class="card">
+        <img src="../images/counter-strike.jpg" alt="Counter Strike">
+        <h3 class="card-title">Game Title</h3>
+        <p>Body text for whatever you'd like to add more to the subheading.</p>
+      </div>
+      <div class="card">
+        <img src="../images/team-fortress.jpg" alt="Team Fortress">
+        <h3 class="card-title">Game Title</h3>
+        <p>Body text for whatever you'd like to expand on the main point.</p>
+      </div>
+      <div class="card">
+        <img src="../images/day-of-defeat.jpg" alt="Day of Defeat">
+        <h3 class="card-title">Game Title</h3>
+        <p>Body text for whatever you'd like to share more.</p>
+      </div>
+      <div class="card">
+        <img src="../images/counter-strike.jpg" alt="Counter Strike">
+        <h3 class="card-title">Game Title</h3>
+        <p>Body text for whatever you'd like to add more to the subheading.</p>
+      </div>
+      <div class="card">
+        <img src="../images/counter-strike.jpg" alt="Counter Strike">
+        <h3 class="card-title">Game Title</h3>
+        <p>Body text for whatever you'd like to add more to the subheading.</p>
+      </div>
+      <div class="card">
+        <img src="../images/team-fortress.jpg" alt="Team Fortress">
+        <h3 class="card-title">Game Title</h3>
+        <p>Body text for whatever you'd like to expand on the main point.</p>
+      </div>
+      <div class="card">
+        <img src="../images/day-of-defeat.jpg" alt="Day of Defeat">
+        <h3 class="card-title">Game Title</h3>
+        <p>Body text for whatever you'd like to share more.</p>
+      </div>
+      <div class="card">
+        <img src="../images/counter-strike.jpg" alt="Counter Strike">
+        <h3 class="card-title">Game Title</h3>
+        <p>Body text for whatever you'd like to add more to the subheading.</p>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2024 DBMS Group 15. All rights reserved.</p>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const searchFilterInput = document.getElementById("searchFilterInput");
+      const filterContainer = document.getElementById("filterContainer");
+
+      searchFilterInput.addEventListener("click", () => {
+        filterContainer.classList.toggle("hidden");
+      });
+    });
+  </script>
+</body>
+</html>
