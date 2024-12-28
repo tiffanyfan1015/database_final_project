@@ -1,70 +1,179 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Community of {{ community['group_name'] }}</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        .post {
-            border: 1px solid #ccc;
-            margin-bottom: 15px;
-            padding: 15px;
-            border-radius: 8px;
-        }
-        .post h3 {
-            margin: 0 0 10px;
-        }
-        .post p {
-            margin: 0;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Community of {{ community['group_name'] }}</h1>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #fff4ea;
+        margin: 0;
+        padding: 0;
+        color: #333;
+      }
+      button {
+        display: inline-block;
+        outline: none;
+        cursor: pointer;
+        font-weight: 500;
+        border-radius: 3px;
+        padding: 0 15px;
+        border-radius: 4px;
+        color: #7eacb5;
+        background: transparent;
+        line-height: 1.15;
+        font-size: 14px;
+        height: 36px;
+        word-spacing: 0px;
+        letter-spacing: 0.0892857143em;
+        text-decoration: none;
+        text-transform: uppercase;
+        min-width: 64px;
+        border: 2px solid #7eacb5;
+        text-align: center;
+        transition: all 0.3s ease;
+      }
+      button:hover {
+        transform: scale(1.1);
+      }
+      .container {
+        width: 800px; /* Explicitly set a consistent width */
+        min-height: 600px; /* Optionally set a minimum height */
+        padding: 20px;
+        background: #fff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        transition: all 0.3s ease;
+      }
+      .container:hover {
+        transform: translate(-50%, -50%) scale(1.02);
+      }
 
+      .button-container {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        gap: 15px; /* Add a gap between buttons */
+      }
+
+      h1 {
+        text-align: center;
+        color: #7eacb5;
+      }
+      .post {
+        border: 2px solid yellow;
+
+        padding: 15px;
+        margin-bottom: 15px;
+        border-radius: 8px;
+        background: #fafafa;
+      }
+      .post img {
+        float: left;
+        margin-right: 15px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        background-color: #fadfa1;
+      }
+      .post h3 {
+        margin-top: 0;
+        color: #333;
+      }
+      .post p {
+        margin: 5px 0;
+      }
+      ul {
+        list-style: none;
+        padding: 0;
+      }
+      ul li {
+        overflow: hidden;
+        padding-bottom: 10px;
+      }
+      p {
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Community of {{ community['group_name'] }}</h1>
+
+      <div class="button-container">
         <!-- Back to Home Button -->
         <a href="{{ url_for('home') }}">
-            <button type="button">Back to Home</button>
+          <button type="button">Back to Home</button>
         </a>
 
-        <!-- Chat Room and Add Post Buttons -->
-        <a href="{{ url_for('community_bp.view_chat_room', group_name=community['group_name']) }}">
-            <button type="button">Chat Room</button>
-        </a>
-        <a href="{{ url_for('community_bp.add_post_page', group_name=community['group_name']) }}">
-            <button type="button">Add Post</button>
+        <!-- Chat Room Button -->
+        <a
+          href="{{ url_for('community_bp.view_chat_room', group_name=community['group_name']) }}"
+        >
+          <button type="button">Chat Room</button>
         </a>
 
-        <!-- Post Section -->
-        <h2>Posts</h2>
-        {% if posts %}
-            <ul>
-                {% for post in posts %}
-                <li style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; border-radius: 5px;">
-                    {% if post['header_image'] %}
-                        <img src="{{ post['header_image'] }}" alt="{{ post['game_name'] }}" style="width: 100px; height: auto; margin-bottom: 10px; border-radius: 5px;">
-                    {% else %}
-                        <img src="/static/images/default-game.png" alt="Default Image" style="width: 100px; height: auto; margin-bottom: 10px; border-radius: 5px;">
-                    {% endif %}
-                    <strong>Game:</strong> {{ post['game_name'] if post['game_name'] else "Not Specified" }}<br>
-                    <strong>Type:</strong> {{ "Ask" if post['tag'] == "0" else "Recommend" }}<br>
-                    <strong>User:</strong> {{ post['user_name'] }}<br>
-                    {{ post['content'] }}
-                </li>                
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p>No post now.</p>
-        {% endif %}
+        <!-- Add Post Button -->
+        <a
+          href="{{ url_for('community_bp.add_post_page', group_name=community['group_name']) }}"
+        >
+          <button type="button">Add Post</button>
+        </a>
+      </div>
+
+      <!-- Post Section -->
+      <h2>Posts</h2>
+      {% if posts %}
+      <ul>
+        {% for post in posts %}
+        <li
+          style="
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 2px solid #7eacb5;
+          "
+        >
+          {% if post['header_image'] %}
+          <img
+            src="{{ post['header_image'] }}"
+            alt="{{ post['game_name'] }}"
+            style="
+              width: 100px;
+              height: auto;
+              margin-bottom: 10px;
+              border-radius: 5px;
+            "
+          />
+          {% else %}
+          <img
+            src="/static/images/default-game.png"
+            alt="Default Image"
+            style="
+              width: 100px;
+              height: auto;
+              margin-bottom: 10px;
+              border-radius: 5px;
+            "
+          />
+          {% endif %}
+          <strong>Game:</strong> {{ post['game_name'] if post['game_name'] else
+          "Not Specified" }}<br />
+          <strong>Type:</strong> {{ "Ask" if post['tag'] == "0" else "Recommend"
+          }}<br />
+          <strong>User:</strong> {{ post['user_name'] }}<br />
+          {{ post['content'] }}
+        </li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p>No post now.</p>
+      {% endif %}
     </div>
-</body>
+  </body>
 </html>

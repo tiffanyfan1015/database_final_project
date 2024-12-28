@@ -1,148 +1,275 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Add Post</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            margin: 0;
-            padding: 20px;
-        }
-        .container {
-            max-width: 600px;
-            margin: 20px auto;
-            padding: 20px;
-            background: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        label {
-            font-weight: bold;
-            display: block;
-            margin-bottom: 5px;
-        }
-        input, textarea, button {
-            width: 100%;
-            padding: 10px;
-            margin: 5px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        .search-results img {
-            width: 50px;
-            border-radius: 5px;
-            margin-right: 10px;
-        }
-        .post-type-buttons button {
-            width: 48%;
-            margin-right: 4%;
-        }
-        .post-type-buttons button:last-child {
-            margin-right: 0;
-        }
-        .selected {
-            background-color: #0056b3;
-            color: white;
-        }
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #fff4ea;
+        margin: 0;
+        padding: 0;
+        color: #333;
+      }
+
+      .container {
+        width: 800px;
+        min-height: 600px;
+        padding: 30px;
+        background: #fff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        transition: all 0.3s ease;
+      }
+
+      .container:hover {
+        transform: translate(-50%, -50%) scale(1.02);
+      }
+
+      h2 {
+        text-align: center;
+        color: #7eacb5;
+        margin-bottom: 30px;
+      }
+
+      .form-group {
+        margin-bottom: 25px;
+      }
+
+      label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 10px;
+      }
+
+      .input-group {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      input {
+        flex: 1;
+        padding: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
+
+      .search-button {
+        background: #7eacb5;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 15px;
+        font-size: 1em;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.3s;
+      }
+
+      .search-button:hover {
+        background: #0056b3;
+        transform: scale(1.1);
+      }
+
+      textarea {
+        width: 100%;
+        padding: 15px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
+
+      button {
+        background: #7eacb5;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 15px 20px;
+        font-size: 1em;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.3s;
+      }
+
+      button:hover {
+        background: #0056b3;
+        transform: scale(1.1);
+      }
+
+      .post-type-buttons {
+        display: flex;
+        gap: 15px;
+        margin-top: 10px;
+      }
+
+      .post-type-buttons button {
+        flex: 1;
+      }
+
+      .selected {
+        background-color: #0056b3;
+        color: white;
+      }
+
+      .search-results {
+        margin: 30px 0;
+        text-align: center;
+      }
+
+      .search-results img {
+        width: 100px;
+        border-radius: 8px;
+        margin-bottom: 15px;
+      }
+
+      .search-results strong {
+        display: block;
+        margin-top: 10px;
+        color: #333;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <h2>Add Post to {{ group_name }}</h2>
-        <!-- Search Form -->
-        <form action="{{ url_for('community_bp.add_post_page', group_name=group_name) }}" method="POST">
-            <div class="form-group">
-                <label for="game_name">Search Game by Name:</label>
-                <input type="text" id="game_name" name="game_name" placeholder="Enter game name" required>
-            </div>
-            <button type="submit">Search</button>
-        </form>
+      <h2>Add Post to {{ group_name }}</h2>
 
-        <!-- Search Result -->
-        {% if search_results and search_results|length > 0 %}
-        <div class="search-results">
-            <h3>Search Result:</h3>
-            <div>
-                <img src="{{ search_results[0].header_image }}" alt="{{ search_results[0].name }}">
-                <strong>{{ search_results[0].name }}</strong>
-            </div>
-            <input type="hidden" name="game_name" id="selected_game" value="{{ search_results[0].name }}">
+      <!-- Search Form -->
+      <form
+        action="{{ url_for('community_bp.add_post_page', group_name=group_name) }}"
+        method="POST"
+      >
+        <div class="form-group">
+          <label for="game_name">Search Game by Name:</label>
+          <div class="input-group">
+            <input
+              type="text"
+              id="game_name"
+              name="game_name"
+              placeholder="Enter game name"
+              required
+            />
+            <button type="submit" class="search-button">Search</button>
+          </div>
         </div>
-        {% endif %}
+      </form>
 
-        <!-- Add Post Form -->
-        <form id="postForm" action="{{ url_for('community_bp.submit_post', group_name=group_name) }}" method="POST" onsubmit="return handleSubmit(event);">
-            <input type="hidden" name="game_name" value="{{ search_results[0].name if search_results and search_results|length > 0 else '' }}">
-            <input type="hidden" name="appid" id="selected_appid" value="{{ search_results[0].appid if search_results and search_results|length > 0 else '' }}">
-            <input type="hidden" name="group_name" value="{{ group_name }}">
-            <div class="form-group">
-                <label for="post_type">Post Type:</label>
-                <div class="post-type-buttons">
-                    <button type="button" class="post-type-btn" onclick="setPostType(0)" id="ask-button">Ask</button>
-                    <button type="button" class="post-type-btn" onclick="setPostType(1)" id="recommend-button">Recommend</button>
-                </div>
-                <input type="hidden" name="post_type" id="post_type" value="0">
-            </div>
-            <div class="form-group">
-                <label for="content">Content:</label>
-                <textarea id="content" name="content" rows="4" placeholder="Enter your post content" required></textarea>
-            </div>
-            <button type="submit">Submit</button>
-        </form>
+      <!-- Search Result -->
+      {% if search_results and search_results|length > 0 %}
+      <div class="search-results">
+        <h3>Search Result:</h3>
+        <img
+          src="{{ search_results[0].header_image }}"
+          alt="{{ search_results[0].name }}"
+        />
+        <strong>{{ search_results[0].name }}</strong>
+        <input
+          type="hidden"
+          name="game_name"
+          id="selected_game"
+          value="{{ search_results[0].name }}"
+        />
+      </div>
+      {% endif %}
+
+      <!-- Add Post Form -->
+      <form
+        id="postForm"
+        action="{{ url_for('community_bp.submit_post', group_name=group_name) }}"
+        method="POST"
+        onsubmit="return handleSubmit(event);"
+      >
+        <input
+          type="hidden"
+          name="game_name"
+          value="{{ search_results[0].name if search_results and search_results|length > 0 else '' }}"
+        />
+        <input
+          type="hidden"
+          name="appid"
+          id="selected_appid"
+          value="{{ search_results[0].appid if search_results and search_results|length > 0 else '' }}"
+        />
+        <input type="hidden" name="group_name" value="{{ group_name }}" />
+        <div class="form-group">
+          <label for="post_type">Post Type:</label>
+          <div class="post-type-buttons">
+            <button
+              type="button"
+              class="post-type-btn"
+              onclick="setPostType(0)"
+              id="ask-button"
+            >
+              Ask
+            </button>
+            <button
+              type="button"
+              class="post-type-btn"
+              onclick="setPostType(1)"
+              id="recommend-button"
+            >
+              Recommend
+            </button>
+          </div>
+          <input type="hidden" name="post_type" id="post_type" value="0" />
+        </div>
+        <div class="form-group">
+          <label for="content">Content:</label>
+          <textarea
+            id="content"
+            name="content"
+            rows="4"
+            placeholder="Enter your post content"
+            required
+          ></textarea>
+        </div>
+        <button type="submit">Submit</button>
+      </form>
     </div>
 
     <script>
-        function setPostType(type) {
-            document.getElementById('post_type').value = type;
-            const askButton = document.getElementById('ask-button');
-            const recommendButton = document.getElementById('recommend-button');
-            if (type === 0) {
-                askButton.classList.add('selected');
-                recommendButton.classList.remove('selected');
+      function setPostType(type) {
+        document.getElementById("post_type").value = type;
+        const askButton = document.getElementById("ask-button");
+        const recommendButton = document.getElementById("recommend-button");
+        if (type === 0) {
+          askButton.classList.add("selected");
+          recommendButton.classList.remove("selected");
+        } else {
+          recommendButton.classList.add("selected");
+          askButton.classList.remove("selected");
+        }
+      }
+
+      function handleSubmit(event) {
+        event.preventDefault();
+
+        const form = document.getElementById("postForm");
+        const formData = new FormData(form);
+
+        fetch(form.action, {
+          method: "POST",
+          body: formData,
+        })
+          .then((response) => {
+            if (response.ok) {
+              alert("Submitted successfully!");
+              window.location.href =
+                "{{ url_for('community_bp.view_community', group_name=group_name) }}";
             } else {
-                recommendButton.classList.add('selected');
-                askButton.classList.remove('selected');
+              alert("Submission failed. Please try again.");
             }
-        }
-
-        function handleSubmit(event) {
-            event.preventDefault();
-
-            const form = document.getElementById('postForm');
-            const formData = new FormData(form);
-
-            fetch(form.action, {
-                method: 'POST',
-                body: formData,
-            })
-                .then(response => {
-                    if (response.ok) {
-                        alert('Submitted successfully!');
-                        window.location.href = "{{ url_for('community_bp.view_community', group_name=group_name) }}";
-                    } else {
-                        alert('Submission failed. Please try again.');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('An error occurred. Please try again.');
-                });
-        }
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            alert("An error occurred. Please try again.");
+          });
+      }
     </script>
-</body>
+  </body>
 </html>

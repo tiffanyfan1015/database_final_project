@@ -1,130 +1,162 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Group {{ group_name }} Chat Room</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f9;
-        }
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #fff4ea;
+        margin: 0;
+        padding: 0;
+        color: #333;
+      }
 
-        h1 {
-            text-align: center;
-            color: #444;
-            margin: 20px 0;
-        }
+      .container {
+        width: 800px;
+        min-height: 600px;
+        padding: 20px;
+        background: #fff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        transition: all 0.3s ease;
+      }
 
-        a {
-            text-decoration: none;
-            color: #007bff;
-            margin: 10px 0;
-            display: block;
-            text-align: center;
-        }
+      .container:hover {
+        transform: translate(-50%, -50%) scale(1.02);
+      }
 
-        a:hover {
-            text-decoration: underline;
-        }
+      h1 {
+        text-align: center;
+        color: #7eacb5;
+      }
 
-        #chat-container {
-            width: 80%;
-            max-width: 600px;
-            margin: 20px auto;
-            background: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            padding: 15px;
-            overflow-y: auto;
-            height: 400px;
-        }
+      a {
+        text-decoration: none;
+        color: #7eacb5;
+        margin: 10px 0;
+        display: block;
+        text-align: center;
+        transition: color 0.3s;
+      }
 
-        #chat-container div {
-            margin-bottom: 15px;
-            padding: 10px;
-            border-radius: 5px;
-            background: #e9f5ff;
-        }
+      a:hover {
+        color: #0056b3;
+      }
 
-        #chat-container div strong {
-            color: #333;
-            font-weight: bold;
-        }
+      #chat-container {
+        width: 100%;
+        margin: 20px 0;
+        background: #fafafa;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        padding: 15px;
+        overflow-y: auto;
+        height: 400px;
+        box-sizing: border-box; /* Ensure padding is included in width */
+      }
 
-        #chat-container div p {
-            margin: 5px 0 0 0;
-            color: #555;
-        }
+      #chat-container div {
+        margin-bottom: 15px;
+        padding: 10px;
+        border-radius: 5px;
+        background: #e9f5ff;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
 
-        #chat-container div time {
-            font-size: 0.85em;
-            color: #888;
-        }
+      #chat-container div strong {
+        color: #333;
+        font-weight: bold;
+      }
 
-        form {
-            width: 80%;
-            max-width: 600px;
-            margin: 20px auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+      #chat-container div p {
+        margin: 5px 0 0 0;
+        color: #555;
+      }
 
-        form input, form textarea {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 1em;
-        }
+      #chat-container div time {
+        font-size: 0.85em;
+        color: #888;
+      }
 
-        form button {
-            background: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            padding: 10px 20px;
-            font-size: 1em;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
+      form {
+        width: 100%;
+        margin: 20px 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
 
-        form button:hover {
-            background: #0056b3;
-        }
+      form textarea {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 1em;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
 
-        footer {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 0.85em;
-            color: #aaa;
-        }
+      form button {
+        background: #7eacb5;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-size: 1em;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.3s;
+      }
+
+      form button:hover {
+        background: #0056b3;
+        transform: scale(1.1);
+      }
+
+      footer {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 0.85em;
+        color: #aaa;
+      }
     </style>
-</head>
-<body>
-    <h1>Group {{ group_name }} 的 Chat Room</h1>
-    <a href="{{ url_for('community_bp.view_community', group_name=group_name) }}">Back</a>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Group {{ group_name }} 的 Chat Room</h1>
+      <a
+        href="{{ url_for('community_bp.view_community', group_name=group_name) }}"
+        >Back</a
+      >
 
-    <!-- chat record -->
-    <div id="chat-container">
+      <!-- chat record -->
+      <div id="chat-container">
         {% for chat in chats %}
-            <div>
-                <strong>{{ chat.user_name }}</strong>
-                <time>({{ chat.timestamp }})</time>
-                <p>{{ chat.message }}</p>
-            </div>
+        <div>
+          <strong>{{ chat.user_name }}</strong>
+          <time>({{ chat.timestamp }})</time>
+          <p>{{ chat.message }}</p>
+        </div>
         {% endfor %}
-    </div>
+      </div>
 
-    <!-- send message -->
-    <form action="{{ url_for('community_bp.send_message', group_name=group_name) }}" method="POST">
-        <!-- <input type="text" name="user_name" placeholder="your name " required> -->
-        <textarea name="message" placeholder="Enter message" required></textarea>
+      <!-- send message -->
+      <form
+        action="{{ url_for('community_bp.send_message', group_name=group_name) }}"
+        method="POST"
+      >
+        <textarea
+          name="message"
+          placeholder="Enter message"
+          required
+        ></textarea>
         <button type="submit">Submit</button>
-    </form>
-</body>
+      </form>
+    </div>
+  </body>
 </html>
