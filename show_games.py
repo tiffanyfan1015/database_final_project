@@ -3,17 +3,9 @@ import mysql.connector
 import os
 import json
 import re
+from db import get_db_connection
 
 app = Flask(__name__)
-
-def get_db_connection():
-    conn = mysql.connector.connect(
-        host="localhost",
-        user=os.getenv("DB_USERS"),
-        password=os.getenv("DB_PASSWORD"),
-        database="steams"
-    )
-    return conn
 
 @app.route("/")
 def menu():
@@ -23,7 +15,7 @@ def menu():
     
     cursor.execute("""
         SELECT s.name, m.header_image, s.appid
-        FROM Steam AS s
+        FROM Game AS s
         JOIN Media AS m ON s.appid = m.appid
     """)
     
@@ -31,7 +23,7 @@ def menu():
     cursor.close()
     conn.close()
     
-    return render_template("index.html", games=games)
+    return render_template("games_index.html", games=games)
 
 @app.route('/game/<int:appid>')
 def game_details(appid):
@@ -39,11 +31,11 @@ def game_details(appid):
     cursor = conn.cursor()
 
     cursor.execute("""
-        SELECT Steam.name, Media.header_image, Description.detailed_description
-        FROM Steam
-        JOIN Media ON Steam.appid = Media.appid
-        JOIN Description ON Steam.appid = Description.appid
-        WHERE Steam.appid = %s;
+        SELECT Game.name, Media.header_image, Description.detailed_description
+        FROM Game
+        JOIN Media ON Game.appid = Media.appid
+        JOIN Description ON Game.appid = Description.appid
+        WHERE Game.appid = %s;
     """, (appid,))
 
     game = cursor.fetchone()
@@ -81,7 +73,7 @@ def game_details(appid):
     }
 
     return render_template(
-        'detail.html',
+        'games_detail.html',
         game=game,
         requirements=parsed_requirements
     )

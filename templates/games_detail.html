@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ game[0] }} - Details</title>
+  <style>
+    /* General Reset */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-color: #FFF4EA;
+      color: #7EACB5;
+    }
+
+    /* Header */
+    .header {
+      background-color: #C96868;
+      color: #FFF4EA;
+      padding: 20px;
+    }
+
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .header-title {
+      font-size: 1.5rem;
+    }
+
+    /* Content */
+    .content {
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .content-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .game-title {
+      font-size: 2rem;
+      color: #C96868;
+      margin: 0;
+    }
+
+    .game-description {
+      margin: 20px 0;
+      line-height: 1.6;
+      text-align: justify;
+      max-width: 600px;
+    }
+
+    .game-image {
+      max-width: 500px;
+      border-radius: 8px;
+    }
+
+    /* Table */
+    .game-attributes {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 40px 0;
+    }
+
+    .game-attributes th,
+    .game-attributes td {
+      border: 1px solid #FADFA1;
+      padding: 10px;
+      text-align: left;
+    }
+
+    .game-attributes th {
+      background-color: #FADFA1;
+      color: #7EACB5;
+    }
+
+    /* Comments Section */
+    .comments {
+      margin-top: 40px;
+    }
+
+    .comments h2 {
+      color: #C96868;
+      font-size: 1.5rem;
+    }
+
+    .comment {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      margin: 20px 0;
+    }
+
+    .comment-icon {
+      font-size: 1.5rem;
+      color: #7EACB5;
+      width: 40px;
+      height: 40px;
+      border: 2px solid #C96868;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .comment-content {
+      max-width: 800px;
+    }
+
+    .comment-content strong {
+      display: block;
+      color: #C96868;
+    }
+
+    .comment-form {
+      margin-top: 20px;
+    }
+
+    .comment-form input, .comment-form textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .comment-form button {
+      padding: 10px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .comment-form button:hover {
+      background-color: #0056b3;
+    }
+
+    /* Footer */
+    .footer {
+      background-color: #7EACB5;
+      color: #FFF4EA;
+      text-align: center;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-container">
+      <h1 class="header-title">DBMS Group 15 Final Project</h1>
+    </div>
+  </header>
+
+  <main class="content">
+    <!-- Game Details Header -->
+    <div class="content-header">
+      <div>
+        <h2 class="game-title">{{ game[0] }}</h2>
+        <p class="game-description">
+          {{ game[2] | safe }}
+        </p>
+      </div>
+      <img src="{{ game[1] }}" alt="{{ game[0] }} Image" class="game-image">
+    </div>
+
+    <!-- Game Attributes Table -->
+    <table class="game-attributes">
+      <tr>
+        <th>Attribute</th>
+        <th>Value</th>
+      </tr>
+      <tr>
+        <td>Genre</td>
+        <td>{{ game[3] }}</td>
+      </tr>
+      <tr>
+        <td>Platform</td>
+        <td> {{ game[6] }}</td>
+      </tr>
+      <tr>
+        <td>Release Date</td>
+        <td>{{game[5] }}</td>
+      </tr>
+      <tr>
+        <td>Developer</td>
+        <td>{{ game[4] }}</td>
+      </tr>
+    </table>
+
+    <!-- Comments Section -->
+    <section class="comments">
+      <h2>Comments</h2>
+      {% for comment in comments %}
+      <div class="comment">
+        <div class="comment-icon">👤</div>
+        <div class="comment-content">
+          <strong>{{ comment['username'] }}</strong>
+          <p>{{ comment['text'] }}</p>
+        </div>
+      </div>
+      {% endfor %}
+
+      <!-- Add a Comment -->
+      <form class="comment-form" action="/submit_comment" method="POST">
+        <label for="username">Your Name:</label>
+        <input type="text" id="username" name="username" placeholder="Your Name" required>
+
+        <label for="comment">Your Comment:</label>
+        <textarea id="comment" name="comment" rows="4" placeholder="Write your comment here..." required></textarea>
+
+        <button type="submit">Submit Comment</button>
+      </form>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2024 DBMS Group 15. All rights reserved.</p>
+  </footer>
+</body>
+</html>
