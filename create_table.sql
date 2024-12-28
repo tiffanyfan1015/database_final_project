@@ -10,7 +10,8 @@ CREATE TABLE Game (
     category VARCHAR(255),
 );
 
-LOAD DATA LOCAL INFILE '/tmp/filtered_steam.csv'
+
+LOAD DATA LOCAL INFILE '/path/to/your/steam.csv'
 INTO TABLE Game
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'            
@@ -32,7 +33,7 @@ CREATE TABLE Description (
     short_description TEXT
 );
 
-LOAD DATA LOCAL INFILE '/tmp/filtered_steam_description_data.csv'
+LOAD DATA LOCAL INFILE '/path/to/your/description.csv'
 INTO TABLE Description
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'            
@@ -44,7 +45,7 @@ CREATE TABLE Media (
     header_image TEXT
 );
 
-LOAD DATA LOCAL INFILE '/tmp/filtered_steam_media_data.csv'
+LOAD DATA LOCAL INFILE '/path/to/your/media.csv'
 INTO TABLE Media
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'            
@@ -60,7 +61,7 @@ CREATE TABLE Requirements (
     recommended TEXT
 );
 
-LOAD DATA LOCAL INFILE '/tmp/filtered_steam_requirements_data.csv'
+LOAD DATA LOCAL INFILE '/path/to/your/Requirements.csv'
 INTO TABLE Requirements
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'            
@@ -74,7 +75,7 @@ CREATE TABLE Support (
     support_email TEXT
 );
 
-LOAD DATA LOCAL INFILE '/tmp/filtered_steam_support_info.csv'
+LOAD DATA LOCAL INFILE '/path/to/your/Support.csv'
 INTO TABLE Support
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'            
