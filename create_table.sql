@@ -2,13 +2,14 @@ CREATE TABLE Game (
     appid INT PRIMARY KEY,
     name VARCHAR(255),
     release_date DATE,
-    genres VARCHAR(255),
-    platforms VARCHAR(255),
-    category VARCHAR(255),
+    english BOOL,
     developer VARCHAR(255),
-    owner_count INT,
-    `2d_or_3d` VARCHAR(50)
+    publisher VARCHAR(255),
+    platforms VARCHAR(255),
+    required_age INT,
+    category VARCHAR(255),
 );
+
 
 LOAD DATA LOCAL INFILE '/path/to/your/steam.csv'
 INTO TABLE Game
