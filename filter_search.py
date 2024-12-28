@@ -18,20 +18,14 @@ def load_data():
     return df
 
 # Filter games
-def filter_games(df, languages=None, platforms=None, age_requirements=None, genres=None, categories=None):
+def filter_games(df, platforms=None, age_requirements=None, categories=None):
     filtered_df = df.copy()
-
-    if languages:
-        filtered_df = filtered_df[filtered_df['language'].apply(lambda x: any(lang in x for lang in languages) if pd.notna(x) else False)]
 
     if platforms:
         filtered_df = filtered_df[filtered_df['platforms'].apply(lambda x: any(platform in x for platform in platforms) if pd.notna(x) else False)]
 
     if age_requirements:
         filtered_df = filtered_df[filtered_df['age_requirement'].apply(lambda x: x in age_requirements if pd.notna(x) else False)]
-
-    if genres:
-        filtered_df = filtered_df[filtered_df['genres'].apply(lambda x: any(genre in x for genre in genres) if pd.notna(x) else False)]
 
     if categories:
         filtered_df = filtered_df[filtered_df['categories'].apply(lambda x: any(category in x for category in categories) if pd.notna(x) else False)]

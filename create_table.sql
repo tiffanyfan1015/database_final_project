@@ -73,7 +73,7 @@ CREATE TABLE Support (
     website TEXT,
     support_url TEXT,
     support_email TEXT
-)
+);
 
 LOAD DATA LOCAL INFILE '/path/to/your/Support.csv'
 INTO TABLE Support

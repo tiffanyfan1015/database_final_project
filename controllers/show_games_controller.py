@@ -2,64 +2,83 @@ import re
 import json
 from db import get_db_connection
 
-def fetch_all_games():
-    conn = get_db_connection()
-    cursor = conn.cursor(dictionary=True)
-    
-    cursor.execute("""
-        SELECT s.name, m.header_image, s.appid
-        FROM Game AS s
-        JOIN Media AS m ON s.appid = m.appid
-    """)
-    games = cursor.fetchall()
 
-    cursor.close()
-    conn.close()
-    return games
 
 def fetch_filtered_games(filters):
-    conn = get_db_connection()
-    cursor = conn.cursor(dictionary=True)
-    query = """
-        SELECT Game.appid, Game.name, Media.header_image, Game.genres, Game.platforms
-        FROM Game
-        LEFT JOIN Media ON Game.appid = Media.appid
-        WHERE 1=1
     """
-    params = []
-    if filters.get("genres"):
-        query += " AND Game.genres LIKE %s"
-        params.append(f"%{filters['genres']}%")
-    if filters.get("platforms"):
-        query += " AND Game.platforms LIKE %s"
-        params.append(f"%{filters['platforms']}%")
-    if filters.get("name"):
-        query += " AND Game.name LIKE %s"
-        params.append(f"%{filters['name']}%")
-    cursor.execute(query, params)
-    games = cursor.fetchall()
-    cursor.close()
-    conn.close()
-    return games
+    Combines filtering and search functionality to fetch games.
+    """
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor(dictionary=True)
+
+        # Base query
+        query = """
+            SELECT Game.appid, Game.name, Game.platforms, Game.category, Game.required_age,
+                   Media.header_image, Game.developer, Game.publisher
+            FROM Game
+            LEFT JOIN Media ON Game.appid = Media.appid
+            WHERE 1=1
+        """
+        params = []
+
+        # Add filtering logic
+        if filters.get("platforms"):
+            query += " AND Game.platforms LIKE %s"
+            params.append(f"%{filters['platforms']}%")
+        if filters.get("age"):
+            query += " AND Game.required_age = %s"
+            params.append(filters["age"])
+        if filters.get("categories"):
+            query += " AND Game.category LIKE %s"
+            params.append(f"%{filters['categories']}%")
+
+        # Add flexible search logic
+        if filters.get("search"):
+            search = filters["search"]
+            query += """
+                AND (
+                    Game.name LIKE %s OR
+                    Game.developer LIKE %s OR
+                    Game.publisher LIKE %s OR
+                    Game.category LIKE %s
+                )
+            """
+            params.extend([f"%{search}%"] * 4)
+
+        cursor.execute(query, params)
+        games = cursor.fetchall()
+        return games
+    except Exception as e:
+        print(f"Error fetching filtered/searched games: {e}")
+        return []
+    finally:
+        if 'cursor' in locals():
+            cursor.close()
+        if 'conn' in locals():
+            conn.close()
+
 
 def fetch_game_details(appid):
     conn = get_db_connection()
     cursor = conn.cursor()
 
     cursor.execute("""
-        SELECT 
-            Game.name AS game_name,
-            Media.header_image AS header_image,
-            Description.detailed_description AS detailed_description,
-            Game.genres AS genres,
-            Game.platforms AS platforms,
-            Game.release_date AS release_date,
-            Game.developer AS developer
-        FROM Game
-        LEFT JOIN Media ON Game.appid = Media.appid
-        LEFT JOIN Description ON Game.appid = Description.appid
-        WHERE Game.appid = %s;
-    """, (appid,))
+    SELECT 
+        Game.name AS game_name,
+        Media.header_image AS header_image,
+        Description.detailed_description AS detailed_description,
+        Game.platforms AS platforms,
+        Game.release_date AS release_date,
+        Game.developer AS developer,
+        Game.publisher AS publisher,
+        Game.required_age AS required_age
+    FROM Game
+    LEFT JOIN Media ON Game.appid = Media.appid
+    LEFT JOIN Description ON Game.appid = Description.appid
+    WHERE Game.appid = %s;
+""", (appid,))
+
     game = cursor.fetchone()
 
     cursor.execute("""
