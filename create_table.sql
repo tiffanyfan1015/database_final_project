@@ -2,15 +2,15 @@ CREATE TABLE Game (
     appid INT PRIMARY KEY,
     name VARCHAR(255),
     release_date DATE,
-    genres VARCHAR(255),
-    platforms VARCHAR(255),
-    category VARCHAR(255),
+    english BOOL,
     developer VARCHAR(255),
-    owner_count INT,
-    `2d_or_3d` VARCHAR(50)
+    publisher VARCHAR(255),
+    platforms VARCHAR(255),
+    required_age INT,
+    category VARCHAR(255),
 );
 
-LOAD DATA LOCAL INFILE '/path/to/your/steam.csv'
+LOAD DATA LOCAL INFILE '/tmp/filtered_steam.csv'
 INTO TABLE Game
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'            
@@ -32,7 +32,7 @@ CREATE TABLE Description (
     short_description TEXT
 );
 
-LOAD DATA LOCAL INFILE '/path/to/your/description.csv'
+LOAD DATA LOCAL INFILE '/tmp/filtered_steam_description_data.csv'
 INTO TABLE Description
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'            
@@ -44,7 +44,7 @@ CREATE TABLE Media (
     header_image TEXT
 );
 
-LOAD DATA LOCAL INFILE '/path/to/your/media.csv'
+LOAD DATA LOCAL INFILE '/tmp/filtered_steam_media_data.csv'
 INTO TABLE Media
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'            
@@ -60,7 +60,7 @@ CREATE TABLE Requirements (
     recommended TEXT
 );
 
-LOAD DATA LOCAL INFILE '/path/to/your/Requirements.csv'
+LOAD DATA LOCAL INFILE '/tmp/filtered_steam_requirements_data.csv'
 INTO TABLE Requirements
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'            
@@ -72,9 +72,9 @@ CREATE TABLE Support (
     website TEXT,
     support_url TEXT,
     support_email TEXT
-)
+);
 
-LOAD DATA LOCAL INFILE '/path/to/your/Support.csv'
+LOAD DATA LOCAL INFILE '/tmp/filtered_steam_support_info.csv'
 INTO TABLE Support
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'            

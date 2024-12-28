@@ -127,7 +127,7 @@
             padding: 10px; /* Reduced padding */
             z-index: 10;
             width: 100%;
-            max-width: 1200px;
+            max-width: 300px;
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             display: flex;
@@ -142,7 +142,7 @@
 
         .filter-section {
             flex: 1;
-            min-width: 120px; /* Decreased width for compact layout */
+            min-width: 30px; /* Decreased width for compact layout */
             margin-bottom: 15px; /* Adjusted bottom margin for spacing */
         }
 
@@ -269,14 +269,6 @@
     <div class="filter-container hidden" id="filterContainer">
         <form id="filterForm">
             <div class="filter-section">
-                <h3>Language</h3>
-                <label><input type="checkbox" name="language" value="Chinese"> Chinese</label><br>
-                <label><input type="checkbox" name="language" value="English"> English</label><br>
-                <label><input type="checkbox" name="language" value="Spanish"> Spanish</label><br>
-                <label><input type="checkbox" name="language" value="Italian"> Italian</label><br>
-                <label><input type="checkbox" name="language" value="German"> German</label>
-            </div>
-            <div class="filter-section">
                 <h3>Platform</h3>
                 <label><input type="checkbox" name="platform" value="Windows"> Windows</label><br>
                 <label><input type="checkbox" name="platform" value="MacOS"> MacOS</label><br>
@@ -289,20 +281,11 @@
                 <label><input type="checkbox" name="age" value="18+"> 18+</label>
             </div>
             <div class="filter-section">
-                <h3>Genres</h3>
-                <label><input type="checkbox" name="genres" value="Action"> Action</label><br>
-                <label><input type="checkbox" name="genres" value="Casual"> Casual</label><br>
-                <label><input type="checkbox" name="genres" value="Indie"> Indie</label><br>
-                <label><input type="checkbox" name="genres" value="Adventure"> Adventure</label><br>
-                <label><input type="checkbox" name="genres" value="Strategy"> Strategy</label>
-            </div>
-            <div class="filter-section">
                 <h3>Categories</h3>
                 <label><input type="checkbox" name="categories" value="Single-player"> Single-player</label><br>
                 <label><input type="checkbox" name="categories" value="Multi-player"> Multi-player</label><br>
                 <label><input type="checkbox" name="categories" value="Online Co-op"> Online Co-op</label><br>
                 <label><input type="checkbox" name="categories" value="Local Co-op"> Local Co-op</label><br>
-                <label><input type="checkbox" name="categories" value="Steam Achievements"> Steam Achievements</label>
             </div>
             <button type="submit">Apply Filters</button>
         </form>
@@ -331,6 +314,14 @@
     </footer>
 
     <script>
+        document.addEventListener("DOMContentLoaded", () => {
+      const searchFilterInput = document.getElementById("searchFilterInput");
+      const filterContainer = document.getElementById("filterContainer");
+
+      searchFilterInput.addEventListener("click", () => {
+        filterContainer.classList.toggle("hidden");
+      });
+    });
         // document.addEventListener("DOMContentLoaded", () => {
         //     const searchFilterInput = document.getElementById("searchFilterInput");
         //     const filterContainer = document.getElementById("filterContainer");

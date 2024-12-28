@@ -204,45 +204,35 @@
     </div>
   </header>
   <!-- Filter System -->
-  <div class="filter-container hidden" id="filterContainer">
-    <div class="filter-section">
-      <h3>Language</h3>
-      <label><input type="checkbox"> Chinese</label><br>
-      <label><input type="checkbox"> English</label><br>
-      <label><input type="checkbox"> Spanish</label><br>
-      <label><input type="checkbox"> Italian</label><br>
-      <label><input type="checkbox"> German</label>
-    </div>
-    <div class="filter-section">
-      <h3>Platform</h3>
-      <label><input type="checkbox"> Windows</label><br>
-      <label><input type="checkbox"> MacOS</label><br>
-      <label><input type="checkbox"> Linux</label>
-    </div>
-    <div class="filter-section">
-      <h3>Required Age</h3>
-      <label><input type="checkbox"> 12+</label><br>
-      <label><input type="checkbox"> 16+</label><br>
-      <label><input type="checkbox"> 18+</label>
-    </div>
-    <div class="filter-section">
-      <h3>Genres</h3>
-      <label><input type="checkbox"> Action</label><br>
-      <label><input type="checkbox"> Casual</label><br>
-      <label><input type="checkbox"> Indie</label><br>
-      <label><input type="checkbox"> Adventure</label><br>
-      <label><input type="checkbox"> Strategy</label>
-    </div>
-    <div class="filter-section">
-      <h3>Categories</h3>
-      <label><input type="checkbox"> Single-player</label><br>
-      <label><input type="checkbox"> Multi-player</label><br>
-      <label><input type="checkbox"> Online Co-op</label><br>
-      <label><input type="checkbox"> Local Co-op</label><br>
-      <label><input type="checkbox"> Steam Achievements</label>
-    </div>
+  <div class="search-wrapper">
+    <form method="GET" action="/">
+      <input type="text" name="search" id="searchFilterInput" placeholder="Search or Filter..." class="search-input">
+      <div class="filter-container hidden" id="filterContainer">
+        <div class="filter-section">
+          <h3>Platform</h3>
+          <label><input type="checkbox" name="platforms" value="Windows"> Windows</label><br>
+          <label><input type="checkbox" name="platforms" value="MacOS"> MacOS</label><br>
+          <label><input type="checkbox" name="platforms" value="Linux"> Linux</label>
+        </div>
+        <div class="filter-section">
+          <h3>Required Age</h3>
+          <label><input type="checkbox" name="age" value="12"> 12+</label><br>
+          <label><input type="checkbox" name="age" value="16"> 16+</label><br>
+          <label><input type="checkbox" name="age" value="18"> 18+</label>
+        </div>
+        <div class="filter-section">
+          <h3>Categories</h3>
+          <label><input type="checkbox" name="categories" value="Single-player"> Single-player</label><br>
+          <label><input type="checkbox" name="categories" value="Multi-player"> Multi-player</label><br>
+          <label><input type="checkbox" name="categories" value="Online Co-op"> Online Co-op</label><br>
+          <label><input type="checkbox" name="categories" value="Local Co-op"> Local Co-op</label><br>
+          <label><input type="checkbox" name="categories" value="Steam Achievements"> Steam Achievements</label>
+        </div>
+      </div>
+      <button type="submit" class="login-button">Search/Filter</button>
+    </form>
   </div>
-
+  
   <main class="content">
     <h2>Recommended Games</h2>
     <div class="card-container">

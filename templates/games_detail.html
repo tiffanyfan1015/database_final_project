@@ -44,6 +44,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 20px; /* Add spacing between text and image */
     }
 
     .game-title {
@@ -181,19 +182,19 @@
         <th>Value</th>
       </tr>
       <tr>
-        <td>Genre</td>
+        <td>Platform</td>
         <td>{{ game[3] }}</td>
       </tr>
       <tr>
-        <td>Platform</td>
-        <td> {{ game[6] }}</td>
+        <td>Required Age</td>
+        <td> {{ game[7] }}</td>
       </tr>
       <tr>
-        <td>Release Date</td>
+        <td>Publisher</td>
         <td>{{game[5] }}</td>
       </tr>
       <tr>
-        <td>Developer</td>
+        <td>Release Date</td>
         <td>{{ game[4] }}</td>
       </tr>
     </table>
