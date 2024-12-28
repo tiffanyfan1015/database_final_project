@@ -249,111 +249,81 @@
         </div>
         </div>
     </header>
-
-    <!-- Filter System -->
-    <div class="filter-container hidden" id="filterContainer">
-        <div class="filter-section">
-        <h3>Language</h3>
-        <label><input type="checkbox"> Chinese</label><br>
-        <label><input type="checkbox"> English</label><br>
-        <label><input type="checkbox"> Spanish</label><br>
-        <label><input type="checkbox"> Italian</label><br>
-        <label><input type="checkbox"> German</label>
-        </div>
-        <div class="filter-section">
-        <h3>Platform</h3>
-        <label><input type="checkbox"> Windows</label><br>
-        <label><input type="checkbox"> MacOS</label><br>
-        <label><input type="checkbox"> Linux</label>
-        </div>
-        <div class="filter-section">
-        <h3>Required Age</h3>
-        <label><input type="checkbox"> 12+</label><br>
-        <label><input type="checkbox"> 16+</label><br>
-        <label><input type="checkbox"> 18+</label>
-        </div>
-        <div class="filter-section">
-        <h3>Genres</h3>
-        <label><input type="checkbox"> Action</label><br>
-        <label><input type="checkbox"> Casual</label><br>
-        <label><input type="checkbox"> Indie</label><br>
-        <label><input type="checkbox"> Adventure</label><br>
-        <label><input type="checkbox"> Strategy</label>
-        </div>
-        <div class="filter-section">
-        <h3>Categories</h3>
-        <label><input type="checkbox"> Single-player</label><br>
-        <label><input type="checkbox"> Multi-player</label><br>
-        <label><input type="checkbox"> Online Co-op</label><br>
-        <label><input type="checkbox"> Local Co-op</label><br>
-        <label><input type="checkbox"> Steam Achievements</label>
+    <!-- Add Buttons for Groups -->
+    <div class="content">
+        <div style="text-align: center; margin-bottom: 20px;">
+            <a href="/group">
+                <button style="background-color: #7EACB5; color: #FFF4EA; border: none; border-radius: 5px; padding: 10px 20px; cursor: pointer;">
+                    Create Group
+                </button>
+            </a>
+            <a href="/groups">
+                <button style="background-color: #C96868; color: #FFF4EA; border: none; border-radius: 5px; padding: 10px 20px; cursor: pointer;">
+                    Manage Groups
+                </button>
+            </a>
         </div>
     </div>
 
+    <!-- Filter System -->
+    <div class="filter-container hidden" id="filterContainer">
+        <form id="filterForm">
+            <div class="filter-section">
+                <h3>Language</h3>
+                <label><input type="checkbox" name="language" value="Chinese"> Chinese</label><br>
+                <label><input type="checkbox" name="language" value="English"> English</label><br>
+                <label><input type="checkbox" name="language" value="Spanish"> Spanish</label><br>
+                <label><input type="checkbox" name="language" value="Italian"> Italian</label><br>
+                <label><input type="checkbox" name="language" value="German"> German</label>
+            </div>
+            <div class="filter-section">
+                <h3>Platform</h3>
+                <label><input type="checkbox" name="platform" value="Windows"> Windows</label><br>
+                <label><input type="checkbox" name="platform" value="MacOS"> MacOS</label><br>
+                <label><input type="checkbox" name="platform" value="Linux"> Linux</label>
+            </div>
+            <div class="filter-section">
+                <h3>Required Age</h3>
+                <label><input type="checkbox" name="age" value="12+"> 12+</label><br>
+                <label><input type="checkbox" name="age" value="16+"> 16+</label><br>
+                <label><input type="checkbox" name="age" value="18+"> 18+</label>
+            </div>
+            <div class="filter-section">
+                <h3>Genres</h3>
+                <label><input type="checkbox" name="genres" value="Action"> Action</label><br>
+                <label><input type="checkbox" name="genres" value="Casual"> Casual</label><br>
+                <label><input type="checkbox" name="genres" value="Indie"> Indie</label><br>
+                <label><input type="checkbox" name="genres" value="Adventure"> Adventure</label><br>
+                <label><input type="checkbox" name="genres" value="Strategy"> Strategy</label>
+            </div>
+            <div class="filter-section">
+                <h3>Categories</h3>
+                <label><input type="checkbox" name="categories" value="Single-player"> Single-player</label><br>
+                <label><input type="checkbox" name="categories" value="Multi-player"> Multi-player</label><br>
+                <label><input type="checkbox" name="categories" value="Online Co-op"> Online Co-op</label><br>
+                <label><input type="checkbox" name="categories" value="Local Co-op"> Local Co-op</label><br>
+                <label><input type="checkbox" name="categories" value="Steam Achievements"> Steam Achievements</label>
+            </div>
+            <button type="submit">Apply Filters</button>
+        </form>
+    </div>
+    
+
     <main class="content">
         <h2>Recommended Games</h2>
-        <div class="card-container">
-        <a href="game-details-counter-strike.html" class="card">
-            <img src="../images/counter-strike.jpg" alt="Counter Strike">
-            <h3 class="card-title">Counter Strike</h3>
-            <p>Body text for Counter Strike.</p>
-        </a>
-        <a href="game-details-team-fortress.html" class="card">
-            <img src="../images/team-fortress.jpg" alt="Team Fortress">
-            <h3 class="card-title">Team Fortress</h3>
-            <p>Body text for Team Fortress.</p>
-        </a>
-        <a href="game-details-day-of-defeat.html" class="card">
-            <img src="../images/day-of-defeat.jpg" alt="Day of Defeat">
-            <h3 class="card-title">Day of Defeat</h3>
-            <p>Body text for Day of Defeat.</p>
-        </a>
-        <a href="game-details-counter-strike.html" class="card">
-            <img src="../images/counter-strike.jpg" alt="Counter Strike">
-            <h3 class="card-title">Counter Strike</h3>
-            <p>Body text for Counter Strike.</p>
-        </a>
-        <a href="game-details-counter-strike.html" class="card">
-            <img src="../images/counter-strike.jpg" alt="Counter Strike">
-            <h3 class="card-title">Counter Strike</h3>
-            <p>Body text for Counter Strike.</p>
-        </a>
-        <a href="game-details-team-fortress.html" class="card">
-            <img src="../images/team-fortress.jpg" alt="Team Fortress">
-            <h3 class="card-title">Team Fortress</h3>
-            <p>Body text for Team Fortress.</p>
-        </a>
-        <a href="game-details-day-of-defeat.html" class="card">
-            <img src="../images/day-of-defeat.jpg" alt="Day of Defeat">
-            <h3 class="card-title">Day of Defeat</h3>
-            <p>Body text for Day of Defeat.</p>
-        </a>
-        <a href="game-details-counter-strike.html" class="card">
-            <img src="../images/counter-strike.jpg" alt="Counter Strike">
-            <h3 class="card-title">Counter Strike</h3>
-            <p>Body text for Counter Strike.</p>
-        </a>
-        <a href="game-details-counter-strike.html" class="card">
-            <img src="../images/counter-strike.jpg" alt="Counter Strike">
-            <h3 class="card-title">Counter Strike</h3>
-            <p>Body text for Counter Strike.</p>
-        </a>
-        <a href="game-details-team-fortress.html" class="card">
-            <img src="../images/team-fortress.jpg" alt="Team Fortress">
-            <h3 class="card-title">Team Fortress</h3>
-            <p>Body text for Team Fortress.</p>
-        </a>
-        <a href="game-details-day-of-defeat.html" class="card">
-            <img src="../images/day-of-defeat.jpg" alt="Day of Defeat">
-            <h3 class="card-title">Day of Defeat</h3>
-            <p>Body text for Day of Defeat.</p>
-        </a>
-        <a href="game-details-counter-strike.html" class="card">
-            <img src="../images/counter-strike.jpg" alt="Counter Strike">
-            <h3 class="card-title">Counter Strike</h3>
-            <p>Body text for Counter Strike.</p>
-        </a>
-        </div>
+    <div class="card-container">
+        {% if games %}
+            {% for game in games %}
+                <a href="/game/{{ game['appid'] }}" class="card">
+                    <img src="{{ game['header_image'] }}" alt="{{ game['name'] }}">
+                    <h3 class="card-title">{{ game['name'] }}</h3>
+                    <p>{{ game['genres'] }}</p>
+                </a>
+            {% endfor %}
+        {% else %}
+            <p>No games found matching your criteria.</p>
+        {% endif %}
+    </div>
     </main>
 
     <footer class="footer">
@@ -361,17 +331,54 @@
     </footer>
 
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-        const searchFilterInput = document.getElementById("searchFilterInput");
-        const filterContainer = document.getElementById("filterContainer");
+        // document.addEventListener("DOMContentLoaded", () => {
+        //     const searchFilterInput = document.getElementById("searchFilterInput");
+        //     const filterContainer = document.getElementById("filterContainer");
+        //     const filterForm = document.getElementById("filterForm"); 
+        //     const cardContainer = document.querySelector(".card-container"); 
 
-        searchFilterInput.addEventListener("click", () => {
-            filterContainer.classList.toggle("hidden");
-        });
-        });
+        //     searchFilterInput.addEventListener("click", () => {
+        //         filterContainer.classList.toggle("hidden");
+        //     });
+
+        //     filterForm.addEventListener("submit", (event) => {
+        //         event.preventDefault(); 
+
+        //         const formData = new FormData(filterForm);
+        //         const queryString = new URLSearchParams(formData).toString();
+
+        //         fetch(`/games/filter?${queryString}`)
+        //             .then(response => response.json())
+        //             .then(data => {
+        //                 cardContainer.innerHTML = "";
+
+        //                 if (data.length > 0) {
+        //                     data.forEach(game => {
+        //                         const card = `
+        //                             <a href="/game/${game.appid}" class="card">
+        //                                 <img src="${game.header_image}" alt="${game.name}">
+        //                                 <h3 class="card-title">${game.name}</h3>
+        //                                 <p>${game.genres || 'No genres available'}</p>
+        //                             </a>
+        //                         `;
+        //                         cardContainer.insertAdjacentHTML("beforeend", card);
+        //                     });
+        //                 } else {
+        //                     cardContainer.innerHTML = "<p>No games found matching your criteria.</p>";
+        //                 }
+        //             })
+        //             .catch(error => {
+        //                 console.error("Error fetching filtered games:", error);
+        //                 cardContainer.innerHTML = "<p>Error loading games. Please try again later.</p>";
+        //             });
+        //     });
+
+            
+        // });
         function toggleDropdown() {
-        document.getElementById('dropdown-menu').classList.toggle('active');
+            document.getElementById('dropdown-menu').classList.toggle('active');
         }
+
     </script>
 </body>
 </html>

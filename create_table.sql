@@ -1,10 +1,3 @@
-LOAD DATA LOCAL INFILE '/path/to/your/steam.csv'
-INTO TABLE Game
-FIELDS TERMINATED BY ','
-ENCLOSED BY '"'            
-LINES TERMINATED BY '\n'
-IGNORE 1 ROWS;
-
 CREATE TABLE Game (
     appid INT PRIMARY KEY,
     name VARCHAR(255),
@@ -16,6 +9,13 @@ CREATE TABLE Game (
     owner_count INT,
     `2d_or_3d` VARCHAR(50)
 );
+
+LOAD DATA LOCAL INFILE '/path/to/your/steam.csv'
+INTO TABLE Game
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'            
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS;
 
 CREATE TABLE Comments (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -110,8 +110,10 @@ CREATE TABLE GroupWithUser (
 CREATE TABLE PostTable (
     post_id INT PRIMARY KEY AUTO_INCREMENT,
     group_name VARCHAR(255),
+    user_name VARCHAR(255),
     appid INT,
-    review_text_private TEXT,
+    tag INT, -- 0=ask, 1=recommend
+    content TEXT,
     timestamp DATETIME,
     FOREIGN KEY (group_name) REFERENCES `Groups`(group_name) ON DELETE CASCADE,
     FOREIGN KEY (appid) REFERENCES Game(appid) ON DELETE CASCADE

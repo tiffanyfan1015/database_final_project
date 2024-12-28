@@ -1,84 +1,56 @@
-from db import get_db_connection
+import pandas as pd
+from datetime import datetime
+import pytz
 
-def get_filtered_games(name_keyword=None, genres=None, min_price=0, max_price=float('inf'), 
-                       start_date=None, end_date=None, queries=None, max_output=None):
+# Load the dataset
+folder_path = 'dataset/'
+file_path = folder_path + 'filtered_steam.csv'
+df = pd.read_csv(file_path)
+
+def get_filtered_games(name_keyword, genres, min_price, max_price, start_date, end_date, queries, max_output):
     """
-    Filters and searches games based on provided parameters, using the database.
+    Filters and searches games based on provided parameters.
     """
-    conn = get_db_connection()
-    cursor = conn.cursor(dictionary=True)  # 使用字典格式方便處理
+    # Filter games
+    filtered_df = df.copy()
     
-    query = """
-        SELECT appid, name, release_date, genres, platforms, category, developer, owner_count, `2d_or_3d`
-        FROM Game
-        WHERE 1=1
-    """
-    params = []
-
-    # Filter by name keyword
+    # Filter by name
     if name_keyword:
-        query += " AND name LIKE %s"
-        params.append(f"%{name_keyword}%")
+        filtered_df = filtered_df[filtered_df['name'].str.contains(name_keyword, case=False, na=False)]
     
     # Filter by genres
     if genres:
-        genre_conditions = " OR ".join(["genres LIKE %s"] * len(genres))
-        query += f" AND ({genre_conditions})"
-        params.extend([f"%{genre}%" for genre in genres])
+        filtered_df = filtered_df[filtered_df['genres'].apply(lambda x: any(genre in x for genre in genres) if pd.notna(x) else False)]
     
-    # Filter by price (假設資料表中有 `price` 欄位，否則需移除此段)
-    query += " AND owner_count BETWEEN %s AND %s"
-    params.extend([min_price, max_price])
-
+    # Filter by price
+    filtered_df = filtered_df[(filtered_df['price'] >= min_price) & (filtered_df['price'] <= max_price)]
+    
     # Filter by release date
     if start_date and end_date:
-        query += " AND release_date BETWEEN %s AND %s"
-        params.extend([start_date, end_date])
+        filtered_df['release_date'] = pd.to_datetime(filtered_df['release_date'], errors='coerce')
+        filtered_df = filtered_df[(filtered_df['release_date'] >= pd.to_datetime(start_date)) & 
+                                  (filtered_df['release_date'] <= pd.to_datetime(end_date))]
     
-    # Execute the query
-    cursor.execute(query, params)
-    results = cursor.fetchall()
-
     # Flexible search with scoring
+    filtered_df['score'] = 0
     if queries:
-        for row in results:
-            row['score'] = 0  # Initialize score
-            for query in queries:
+        for query in queries:
+            try:
+                date_query = pd.to_datetime(query)
+                filtered_df['score'] += filtered_df['release_date'].eq(date_query).astype(int)
+            except ValueError:
                 query_lower = query.lower()
-                if query_lower in row['name'].lower():
-                    row['score'] += 1
-                if row['genres'] and query_lower in row['genres'].lower():
-                    row['score'] += 1
-                if row['platforms'] and query_lower in row['platforms'].lower():
-                    row['score'] += 1
-                if row['developer'] and query_lower in row['developer'].lower():
-                    row['score'] += 1
-
-        # Sort by score
-        results = [row for row in results if row['score'] > 0]
-        results.sort(key=lambda x: x['score'], reverse=True)
-
-    # Limit the results
+                filtered_df['score'] += (
+                    filtered_df['name'].str.contains(query_lower, case=False, na=False) |
+                    filtered_df['genres'].str.contains(query_lower, case=False, na=False) |
+                    filtered_df['platforms'].str.contains(query_lower, case=False, na=False) |
+                    filtered_df['developer'].str.contains(query_lower, case=False, na=False) |
+                    filtered_df['publisher'].str.contains(query_lower, case=False, na=False)
+                ).astype(int)
+    
+    # Sort by score and limit output
+    filtered_df = filtered_df[filtered_df['score'] > 0].sort_values(by='score', ascending=False).drop(columns=['score'])
     if max_output:
-        results = results[:max_output]
-
-    cursor.close()
-    conn.close()
-
-    return results
-
-
-if __name__ == "__main__":
-    # Example usage
-    filtered_games = get_filtered_games(
-        name_keyword="Counter",
-        genres=["Action", "Adventure"],
-        min_price=0,
-        max_price=1000000,
-        start_date="2005-01-01",
-        end_date="2015-12-31",
-        queries=["Valve", "Counter"],
-        max_output=10
-    )
-    for game in filtered_games:
-        print(game)
+        filtered_df = filtered_df.head(max_output)
+    
+    return filtered_df.to_dict(orient='records')

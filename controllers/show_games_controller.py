@@ -4,7 +4,7 @@ from db import get_db_connection
 
 def fetch_all_games():
     conn = get_db_connection()
-    cursor = conn.cursor()
+    cursor = conn.cursor(dictionary=True)
     
     cursor.execute("""
         SELECT s.name, m.header_image, s.appid
@@ -17,15 +17,47 @@ def fetch_all_games():
     conn.close()
     return games
 
+def fetch_filtered_games(filters):
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    query = """
+        SELECT Game.appid, Game.name, Media.header_image, Game.genres, Game.platforms
+        FROM Game
+        LEFT JOIN Media ON Game.appid = Media.appid
+        WHERE 1=1
+    """
+    params = []
+    if filters.get("genres"):
+        query += " AND Game.genres LIKE %s"
+        params.append(f"%{filters['genres']}%")
+    if filters.get("platforms"):
+        query += " AND Game.platforms LIKE %s"
+        params.append(f"%{filters['platforms']}%")
+    if filters.get("name"):
+        query += " AND Game.name LIKE %s"
+        params.append(f"%{filters['name']}%")
+    cursor.execute(query, params)
+    games = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return games
+
 def fetch_game_details(appid):
     conn = get_db_connection()
     cursor = conn.cursor()
 
     cursor.execute("""
-        SELECT Game.name, Media.header_image, Description.detailed_description
+        SELECT 
+            Game.name AS game_name,
+            Media.header_image AS header_image,
+            Description.detailed_description AS detailed_description,
+            Game.genres AS genres,
+            Game.platforms AS platforms,
+            Game.release_date AS release_date,
+            Game.developer AS developer
         FROM Game
-        JOIN Media ON Game.appid = Media.appid
-        JOIN Description ON Game.appid = Description.appid
+        LEFT JOIN Media ON Game.appid = Media.appid
+        LEFT JOIN Description ON Game.appid = Description.appid
         WHERE Game.appid = %s;
     """, (appid,))
     game = cursor.fetchone()
@@ -40,8 +72,10 @@ def fetch_game_details(appid):
     cursor.close()
     conn.close()
 
-    if not game or not requirements:
-        return None, None
+    if not game:
+        return "Game not found!", 404
+    if not requirements:
+        return "Not found !", 404
 
     parsed_requirements = {
         "pc": parse_requirements(requirements[0]),

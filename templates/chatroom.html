@@ -107,7 +107,7 @@
 </head>
 <body>
     <h1>Group {{ group_name }} 的 Chat Room</h1>
-    <a href="{{ url_for('community_bp.view_community', group_name=group_name) }}">返回</a>
+    <a href="{{ url_for('community_bp.view_community', group_name=group_name) }}">Back</a>
 
     <!-- chat record -->
     <div id="chat-container">
@@ -120,7 +120,7 @@
         {% endfor %}
     </div>
 
-    <!-- send message (之後會把user_name改成從user抓) -->
+    <!-- send message -->
     <form action="{{ url_for('community_bp.send_message', group_name=group_name) }}" method="POST">
         <!-- <input type="text" name="user_name" placeholder="your name " required> -->
         <textarea name="message" placeholder="Enter message" required></textarea>
