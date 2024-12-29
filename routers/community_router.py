@@ -12,8 +12,9 @@ def community_page():
         if group_exists:
             return redirect(url_for('community_bp.view_community', group_name=group_name))
         else:
-            flash('The group does not exist. Please try again.', 'error') 
-    return render_template('enter_group.html')
+            return render_template('create_group.html', group_exists=False)
+    return render_template('create_group.html')
+
 
 @community_bp.route('/community/<group_name>')
 def view_community(group_name):
