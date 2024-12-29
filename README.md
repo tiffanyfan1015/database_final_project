@@ -18,30 +18,5 @@ mysql  Ver 8.0.37-0ubuntu0.23.10.2 for Linux on aarch64 ((Ubuntu))
 
 The app will be run on http://127.0.0.1:5000 by default.
 
-## 一些開發規範
-* 記得開新 branch 再發PR，讓其他人去 merge。不要直接推到`main`
-* 記得寫 commit message
-* 記得定期更新到最新版
-    * 更新到最新後開始新 branch
-        * Step 1. 確認到 main branch 中 
-            * `git checkout main` 
-            * `git pull`
-        * Step 2. 開新的 branch 
-            * `git branch feature/<newFeature>` 
-            * `git checkout feature/<newFeature>`
-        * Step 3. 開發好新功能
-            * `git add .`
-            * `git commit -am "<commitMessage>"`
-            * `git rebase --continue`
-            * `git push origin feature-branch`*# 如果是新分支*
-            * `git push -f origin feature-branch`*# 如果分支已存在（因為rebase後需要強制推送）*
-        * Step 4. 到 Github 發送 PR
-    * 單純更新到最新
-        * Step 1. 確認到主支把 repo 的抓下來
-            * `git checkout main` 
-            * `git pull`
-        * Step 2. 切回我自己的 branch 
-            * `git checkout feature/<newFeature>`
-        * Step 3. 把 master 合併到我自己的 branch
-            * `git merge main`
-        * Step 4. 修 conflict（如果有的話）
+## Application Introduction
+The application allows users to organize and browse Steam games through a structured grouping system, offering personalized game recommendations, user reviews, and ratings. It enables users to join chat rooms in different groups for real-time conversations. The system uses database management to efficiently handle game information, user interactions, and recommendations.
