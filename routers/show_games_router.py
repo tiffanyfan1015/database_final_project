@@ -1,6 +1,9 @@
 from flask import Blueprint, render_template, request
+from flask import session, redirect
 from controllers.show_games_controller import fetch_filtered_games, fetch_game_details
+from controllers.login_controller import get_users
 import time
+from db import get_db_connection
 
 game_bp = Blueprint('game_bp', __name__)
 
@@ -19,6 +22,11 @@ def get_from_cache(cache_key):
 def set_to_cache(cache_key, data):
     """Set data in cache with the current timestamp."""
     cache[cache_key] = (data, time.time())
+
+def delete_from_cache(cache_key):
+    """Remove data from the cache."""
+    if cache_key in cache:
+        del cache[cache_key]
 
 @game_bp.route("/")
 def menu():
@@ -49,8 +57,8 @@ def game_details(appid):
     if cached_data:
         return cached_data
 
-    game, requirements, reviews = fetch_game_details(appid)
-    
+    game, requirements, reviews, comments = fetch_game_details(appid)
+
     if not game:
         return "Game not found!", 404
     if not requirements:
@@ -60,9 +68,34 @@ def game_details(appid):
         'games_detail.html',
         game=game,
         requirements=requirements,
-        reviews=reviews
+        reviews=reviews,
+        comments=comments,
+        appid = appid
     )
     
     set_to_cache(cache_key, rendered_template)
     
     return rendered_template
+
+@game_bp.route('/submit_comment/<int:appid>', methods=['POST'])
+def submit_comment(appid):
+    username = session.get('username')
+    comment_text = request.form.get('comment')
+
+    if not username or not comment_text or not appid:
+        return "Missing required fields", 400
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("""
+        INSERT INTO Comments (appid, username, comment, created_at)
+        VALUES (%s, %s, %s, NOW());
+    """, (appid, username, comment_text))
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+    cache_key = f"game_details_{appid}"
+    delete_from_cache(cache_key)
+
+    return redirect(f'/game/{appid}')

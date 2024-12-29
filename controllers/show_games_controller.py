@@ -107,6 +107,14 @@ def fetch_game_details(appid):
     """, (appid,))
 
     review = cursor.fetchone()
+    
+    cursor.execute("""
+        SELECT username, comment AS text, created_at
+        FROM Comments
+        WHERE appid = %s
+        ORDER BY created_at DESC;
+    """, (appid,))
+    comments = cursor.fetchall()
 
     cursor.close()
     conn.close()
@@ -128,7 +136,7 @@ def fetch_game_details(appid):
         "review_vote": review[1],
     }
 
-    return game, parsed_requirements, reviews
+    return game, parsed_requirements, reviews, comments
 
 def parse_requirements(req_string):
     if req_string and req_string != '[]':

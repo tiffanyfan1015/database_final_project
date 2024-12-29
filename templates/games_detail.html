@@ -247,16 +247,15 @@
       <div class="comment">
         <div class="comment-icon">👤</div>
         <div class="comment-content">
-          <strong>{{ comment['username'] }}</strong>
-          <p>{{ comment['text'] }}</p>
+          <strong>{{ comment[0] }}:</strong>
+          <span>{{ comment[1] }}</span>
         </div>
       </div>
       {% endfor %}
+    </section>
 
       <!-- Add a Comment -->
-      <form class="comment-form" action="/submit_comment" method="POST">
-        <label for="username">Your Name:</label>
-        <input type="text" id="username" name="username" placeholder="Your Name" required>
+      <form class="comment-form" action="/submit_comment/{{ appid }}" method="POST">
 
         <label for="comment">Your Comment:</label>
         <textarea id="comment" name="comment" rows="4" placeholder="Write your comment here..." required></textarea>
