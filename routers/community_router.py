@@ -6,14 +6,15 @@ community_bp = Blueprint('community_bp', __name__)
 
 @community_bp.route('/community', methods=['GET', 'POST'])
 def community_page():
+    show_alert = False
     if request.method == 'POST':
         group_name = request.form['group_name']
         group_exists, group_name = handle_group(group_name)
         if group_exists:
             return redirect(url_for('community_bp.view_community', group_name=group_name))
         else:
-            return render_template('create_group.html', group_exists=False)
-    return render_template('create_group.html')
+            show_alert = True
+    return render_template('create_group.html', show_alert=show_alert)
 
 
 @community_bp.route('/community/<group_name>')

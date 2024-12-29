@@ -103,12 +103,12 @@
       }
     </style>
     <script type="text/javascript">
-        window.onload = function() {
-            {% if group_exists is not none and not group_exists %}
-                alert('The group does not exist. You can create the group.');
-            {% endif %}
-        };
-    </script>
+      window.onload = function() {
+          {% if show_alert %}
+              alert('The group does not exist. Please try again.');
+          {% endif %}
+      };
+  </script>
   </head>
   <body>
     <div class="container">
