@@ -36,7 +36,7 @@ def update_user_route():
         data['username'] = session['username']
         response = update_user(data)
         if response['status_code'] == 200:
-            redirect('/')
+            return redirect('/')
         else:
             return jsonify(response['message']), response['status_code']
     
