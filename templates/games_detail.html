@@ -84,6 +84,24 @@
       color: #7EACB5;
     }
 
+    /* Reviews Section */
+    .reviews {
+      margin-top: 40px;
+    }
+
+    .reviews h2 {
+      color: #C96868;
+      font-size: 1.5rem;
+    }
+
+    .review {
+      margin-bottom: 20px;
+    }
+
+    .review p {
+      margin: 5px 0;
+    }
+
     /* Comments Section */
     .comments {
       margin-top: 40px;
@@ -202,15 +220,21 @@
     <!-- Reviews Section -->
     <section class="reviews">
       <h2>Reviews</h2>
-      {% if reviews %}
-        {% for review in reviews %}
-          <div class="review">
-            <p><strong>Game:</strong> {{ review[0] }}</p>
-            <p><strong>Score:</strong> {{ review[1] }}</p>
-            <p><strong>Votes:</strong> {{ review[2] }}</p>
-          </div>
-          <hr>
-        {% endfor %}
+
+      <div>
+        <p><strong>Average Review Score:</strong> {{ reviews.review_score }}</p>
+        <p><strong>Total Review Votes:</strong> {{ reviews.review_vote }}</p>
+        <p><strong>Reviews:</strong></p>
+      </div>
+
+      {% if reviews.review_text %}
+        <div class="reviews-list">
+          {% for review in reviews.review_text %}
+            <div class="review">
+              <p><strong>Review {{ loop.index }}:</strong> {{ review }}</p>
+            </div>
+          {% endfor %}
+        </div>
       {% else %}
         <p>No reviews available for this game.</p>
       {% endif %}

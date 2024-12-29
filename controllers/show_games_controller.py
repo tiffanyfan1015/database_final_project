@@ -89,22 +89,27 @@ def fetch_game_details(appid):
     requirements = cursor.fetchone()
 
     cursor.execute("""
-            SELECT app_name, review_score, review_votes
-            FROM SteamReview
-            WHERE appid = %s
-            LIMIT 5;
-        """, (appid,))
-    reviews = cursor.fetchall()
+        SELECT review_text
+        FROM SteamReview
+        WHERE appid = %s
+        LIMIT 5;
+    """, (appid,))
+    texts = cursor.fetchall()
+    review_text = []
 
-    if not reviews:
-        reviews = [["No data available", "No data available", "No data available"]]
-    else:
-        reviews = [list(review) for review in reviews]
+    for text in texts: 
+        review_text.append(text[0])
+    
+    cursor.execute("""
+        SELECT AVG(review_score), SUM(review_votes)
+        FROM SteamReview
+        WHERE appid = %s
+    """, (appid,))
 
-        if reviews[0][2] == -1:
-            reviews[0][2] = 1
-        cursor.close()
-        conn.close()
+    review = cursor.fetchone()
+
+    cursor.close()
+    conn.close()
 
     if not game:
         return "Game not found!", 404
@@ -115,6 +120,12 @@ def fetch_game_details(appid):
         "pc": parse_requirements(requirements[0]),
         "mac": parse_requirements(requirements[1]),
         "linux": parse_requirements(requirements[2]),
+    }
+
+    reviews = {
+        "review_text": review_text,
+        "review_score": review[0],
+        "review_vote": review[1],
     }
 
     return game, parsed_requirements, reviews
