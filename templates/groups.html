@@ -4,6 +4,113 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Group List</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #fff4ea;
+        margin: 0;
+        padding: 0;
+        color: #333;
+      }
+
+      .container {
+        width: 80%;
+        max-width: 800px;
+        margin: 50px auto;
+        padding: 30px;
+        background: #fff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        transition: all 0.3s ease;
+      }
+
+      .container:hover {
+        transform: scale(1.02);
+      }
+
+      h1 {
+        text-align: center;
+        color: #7eacb5;
+        margin-bottom: 30px;
+      }
+
+      #notice {
+        text-align: center;
+        font-size: 1rem;
+        margin-bottom: 20px;
+        display: none;
+      }
+
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+
+      li {
+        margin-bottom: 20px;
+        padding: 20px;
+        background: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
+
+      strong {
+        color: #7eacb5;
+        font-size: 1.1em;
+      }
+
+      button {
+        background: #7eacb5;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 15px;
+        font-size: 0.9em;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.3s;
+        margin-right: 10px;
+      }
+
+      button:hover {
+        background: #0056b3;
+        transform: scale(1.1);
+      }
+
+      .back-button {
+        display: block;
+        text-align: center;
+        margin-top: 20px;
+        color: #7eacb5;
+        text-decoration: none;
+        font-size: 1em;
+        font-weight: bold;
+      }
+
+      .back-button:hover {
+        text-decoration: underline;
+      }
+
+      form {
+        margin-top: 10px;
+        display: inline-block;
+      }
+
+      textarea {
+        width: calc(100% - 20px);
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
+
+      .form-inline {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+    </style>
     <script>
       function showUpdateForm(groupName) {
         const formId = `update-form-${groupName}`;
@@ -27,35 +134,39 @@
     </script>
   </head>
   <body>
-    <h1>Groups</h1>
-    <div id="notice" style="display: none"></div>
-    <ul>
-      {% for group in data %}
-      <li>
-        <strong>{{ group.group_name }}</strong>: {{ group.group_info }}
-        <button onclick="showUpdateForm('{{ group.group_name }}')">
-          Update Info
-        </button>
-        <form
-          id="update-form-{{ group.group_name }}"
-          action="/group/update/{{ group.group_name }}"
-          method="POST"
-          style="display: none"
-        >
-          <textarea name="group_info" rows="2" cols="50" required></textarea>
-          <br />
-          <button type="submit">Submit</button>
-        </form>
-        <form
-          action="/group/delete/{{ group.group_name }}"
-          method="POST"
-          style="display: inline"
-        >
-          <button type="submit">Delete</button>
-        </form>
-      </li>
-      {% endfor %}
-    </ul>
-    <a href="/" class="back-button">Back to Home</a>
+    <div class="container">
+      <h1>Groups</h1>
+      <div id="notice"></div>
+      <ul>
+        {% for group in data %}
+        <li>
+          <strong>{{ group.group_name }}</strong>: {{ group.group_info }}
+          <button onclick="showUpdateForm('{{ group.group_name }}')">
+            Update Info
+          </button>
+          <form
+            id="update-form-{{ group.group_name }}"
+            action="/group/update/{{ group.group_name }}"
+            method="POST"
+            style="display: none"
+          >
+            <textarea name="group_info" rows="2" cols="50" required></textarea>
+            <br />
+            <div class="form-inline">
+              <button type="submit">Submit</button>
+              <form
+                action="/group/delete/{{ group.group_name }}"
+                method="POST"
+                style="display: inline"
+              >
+                <button type="submit">Delete</button>
+              </form>
+            </div>
+          </form>
+        </li>
+        {% endfor %}
+      </ul>
+      <a href="/" class="back-button">Back to Home</a>
+    </div>
   </body>
 </html>
