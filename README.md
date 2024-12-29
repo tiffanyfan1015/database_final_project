@@ -3,15 +3,24 @@
 
 Ubuntu 22.04
 mysql  Ver 8.0.37-0ubuntu0.23.10.2 for Linux on aarch64 ((Ubuntu))
+Please ensure you have MySQL before starting the following step.
+Remember to fill in your information in .env file.
 
 ## Step
-1. Create database and table.
-2. Download flask
+1. Create database.
+    *  `sudo mysql -u root -p`
+    *  `CREATE DATABASE {{ your_db_name }};`
+    *  `SET global local_infile=true;`
+    *  `SHOW global variables LIKE 'local_infile';`
+    *  `\q`
+2. Create tables and load data.
+    * `sudo mysql --local_infile=1 -u root -p {{ your_db_name }} < create_table.sql`
+3. Download flask
     * `sudo apt update`
     * `sudo apt install python3-flask`
-3. Check whether flask is downloaded
+4. Check whether flask is downloaded
     * `python3 -m flask --version`
-4. Run app by  
+5. Run app by  
     *  `python3 app.py`
     or
     * `export FLASK_APP=app.py` then `flask run `

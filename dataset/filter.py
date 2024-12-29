@@ -2,15 +2,15 @@ import pandas as pd
 import random
 
 file_names = [
-    "steam.csv",
-    "steam_description_data.csv",
-    "steam_media_data.csv",
-    "steam_requirements_data.csv",
-    "steam_support_info.csv",
-    "steamspy_tag_data.csv"
+    "filtered_steam.csv",
+    "filtered_steam_description_data.csv",
+    "filtered_steam_media_data.csv",
+    "filtered_steam_requirements_data.csv",
+    "filtered_steam_support_info.csv",
+    "filtered_steamspy_tag_data.csv"
 ]
 
-steam_data = pd.read_csv("steam.csv")
+steam_data = pd.read_csv("filtered_steam.csv")
 
 sampled_appids = random.sample(list(steam_data['appid']), 1000)
 
