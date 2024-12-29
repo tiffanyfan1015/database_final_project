@@ -83,11 +83,11 @@ LINES TERMINATED BY '\n'
 IGNORE 1 ROWS;
 
 CREATE TABLE SteamReview (
-    appid INT PRIMARY KEY,
+    appid INT,
     app_name VARCHAR(255),
+    review_text TEXT,
     review_score DECIMAL(5, 2),
-    review_votes INT,
-    review_text TEXT
+    review_votes INT
 );
 
 CREATE TABLE Users (
