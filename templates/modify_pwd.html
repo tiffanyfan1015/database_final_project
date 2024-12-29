@@ -1,96 +1,94 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modify Password</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #FFF4EA; /* Light cream */
+            color: #7EACB5; /* Muted blue */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Full viewport height for centering */
+        }
 
-{% block title %}Modify Password{% endblock %}
+        .modify-password-container {
+            background-color: #FFF4EA; /* Light cream */
+            border: 1px solid #FADFA1; /* Light gold */
+            border-radius: 8px;
+            padding: 20px;
+            max-width: 400px;
+            width: 100%;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
 
-{% block content %}
-<div class="modify-password-container">
-    <h1>Modify Your Password</h1>
-    <form method="POST" class="modify-password-form">
-        <div class="input-group">
-            <label for="new_password">New Password:</label>
-            <input type="password" id="new_password" name="new_password" required>
-        </div>
-        <button type="submit" class="submit-button">Submit</button>
-    </form>
-</div>
-{% endblock %}
+        h1 {
+            color: #C96868; /* Soft red */
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
 
-{% block head %}
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        background-color: #FFF4EA; /* Light cream */
-        color: #7EACB5; /* Muted blue */
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh; /* Full viewport height for centering */
-    }
+        .modify-password-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
 
-    .modify-password-container {
-        background-color: #FFF4EA; /* Light cream */
-        border: 1px solid #FADFA1; /* Light gold */
-        border-radius: 8px;
-        padding: 20px;
-        max-width: 400px;
-        width: 100%;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        text-align: center;
-    }
+        .input-group {
+            text-align: left;
+        }
 
-    h1 {
-        color: #C96868; /* Soft red */
-        font-size: 1.5rem;
-        margin-bottom: 20px;
-    }
+        .input-group label {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            color: #7EACB5; /* Muted blue */
+            display: block;
+        }
 
-    .modify-password-form {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-    }
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #FADFA1; /* Light gold */
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
 
-    .input-group {
-        text-align: left;
-    }
+        .input-group input:focus {
+            border-color: #C96868; /* Soft red */
+            outline: none;
+        }
 
-    .input-group label {
-        font-size: 1rem;
-        margin-bottom: 5px;
-        color: #7EACB5; /* Muted blue */
-        display: block;
-    }
+        .submit-button {
+            background-color: #7EACB5; /* Muted blue */
+            color: #FFF4EA; /* Light cream */
+            border: none;
+            border-radius: 4px;
+            padding: 10px 15px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
 
-    .input-group input {
-        width: 100%;
-        padding: 10px;
-        font-size: 1rem;
-        border: 1px solid #FADFA1; /* Light gold */
-        border-radius: 4px;
-        box-sizing: border-box;
-    }
-
-    .input-group input:focus {
-        border-color: #C96868; /* Soft red */
-        outline: none;
-    }
-
-    .submit-button {
-        background-color: #7EACB5; /* Muted blue */
-        color: #FFF4EA; /* Light cream */
-        border: none;
-        border-radius: 4px;
-        padding: 10px 15px;
-        font-size: 1rem;
-        cursor: pointer;
-        transition: background-color 0.3s ease, color 0.3s ease;
-    }
-
-    .submit-button:hover {
-        background-color: #FADFA1; /* Light gold */
-        color: #C96868; /* Soft red */
-    }
-</style>
-{% endblock %}
+        .submit-button:hover {
+            background-color: #FADFA1; /* Light gold */
+            color: #C96868; /* Soft red */
+        }
+    </style>
+    <div class="modify-password-container">
+        <h1>Modify Your Password</h1>
+        <form method="POST" class="modify-password-form">
+            <div class="input-group">
+                <label for="new_password">New Password:</label>
+                <input type="password" id="new_password" name="new_password" required>
+            </div>
+            <button type="submit" class="submit-button">Submit</button>
+            <a href="/" class="back-home-button">Back to Home</a>
+        </form>
+    </div>
