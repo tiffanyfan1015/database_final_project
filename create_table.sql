@@ -7,7 +7,7 @@ CREATE TABLE Game (
     publisher VARCHAR(255),
     platforms VARCHAR(255),
     required_age INT,
-    category VARCHAR(255),
+    category VARCHAR(255)
 );
 
 
@@ -83,7 +83,7 @@ LINES TERMINATED BY '\n'
 IGNORE 1 ROWS;
 
 CREATE TABLE SteamReview (
-    app_id INT PRIMARY KEY,
+    appid INT PRIMARY KEY,
     app_name VARCHAR(255),
     review_score DECIMAL(5, 2),
     review_votes INT,
