@@ -199,6 +199,23 @@
       </tr>
     </table>
 
+    <!-- Reviews Section -->
+    <section class="reviews">
+      <h2>Reviews</h2>
+      {% if reviews %}
+        {% for review in reviews %}
+          <div class="review">
+            <p><strong>Game:</strong> {{ review[0] }}</p>
+            <p><strong>Score:</strong> {{ review[1] }}</p>
+            <p><strong>Votes:</strong> {{ review[2] }}</p>
+          </div>
+          <hr>
+        {% endfor %}
+      {% else %}
+        <p>No reviews available for this game.</p>
+      {% endif %}
+    </section>
+
     <!-- Comments Section -->
     <section class="comments">
       <h2>Comments</h2>
