@@ -152,18 +152,18 @@
           >
             <textarea name="group_info" rows="2" cols="50" required></textarea>
             <br />
-            <div class="form-inline">
-              <button type="submit">Submit</button>
-              <form
-                action="/group/delete/{{ group.group_name }}"
-                method="POST"
-                style="display: inline"
-              >
-                <button type="submit">Delete</button>
-              </form>
-            </div>
+            <button type="submit">Submit</button>
+          </form>
+          <!-- Separate Delete Form -->
+          <form
+            action="/group/delete/{{ group.group_name }}"
+            method="POST"
+            style="display: inline"
+          >
+            <button type="submit">Delete</button>
           </form>
         </li>
+
         {% endfor %}
       </ul>
       <a href="/" class="back-button">Back to Home</a>
