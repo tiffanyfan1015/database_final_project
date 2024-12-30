@@ -54,6 +54,12 @@
         border-radius: 5px;
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
       }
+      
+      li > div {
+        display: flex;
+        align-items: center; 
+        width: 100%; 
+      }
 
       strong {
         color: #7eacb5;
@@ -92,8 +98,8 @@
       }
 
       form {
+        display: none;
         margin-top: 10px;
-        display: inline-block;
       }
 
       textarea {
@@ -140,27 +146,31 @@
       <ul>
         {% for group in data %}
         <li>
-          <strong>{{ group.group_name }}</strong>: {{ group.group_info }}
-          <button onclick="showUpdateForm('{{ group.group_name }}')">
-            Update Info
-          </button>
+          <div>
+            <strong>{{ group.group_name }}</strong>: {{ group.group_info }}
+            <div>
+              <button onclick="showUpdateForm('{{ group.group_name }}')">
+                Update Info
+              </button>
+              <form
+                id="delete-form-{{ group.group_name }}"
+                action="/group/delete/{{ group.group_name }}"
+                method="POST"
+                style="display: inline"
+              >
+                <button type="submit">Delete</button>
+              </form>
+            </div>
+          </div>
           <form
             id="update-form-{{ group.group_name }}"
             action="/group/update/{{ group.group_name }}"
             method="POST"
-            style="display: none"
+            class="update-form"
           >
             <textarea name="group_info" rows="2" cols="50" required></textarea>
             <br />
             <button type="submit">Submit</button>
-          </form>
-          <!-- Separate Delete Form -->
-          <form
-            action="/group/delete/{{ group.group_name }}"
-            method="POST"
-            style="display: inline"
-          >
-            <button type="submit">Delete</button>
           </form>
         </li>
 
